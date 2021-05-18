@@ -1,4 +1,4 @@
-# minshop
+# cloud-shop
 
 ## Project setup
 ```
