@@ -72,13 +72,13 @@ export default {
       // this.$router.push(`/search/${this.keywords}`)
 
       const locatiion = {
-        name: "search"
-      }
+        name: "search",
+      };
 
-      if(this.keywords){
+      if (this.keywords) {
         locatiion.params = {
-          keywords: this.keywords
-        }
+          keywords: this.keywords,
+        };
       }
       // 对象写法
       this.$router.push(locatiion);

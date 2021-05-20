@@ -17,8 +17,14 @@ export default
     name: 'search'
   }, {
     path: '/register',
-    component: Register
+    component: Register,
+    meta: {
+      isHiddenFooter: true
+    }
   }, {
     path: '/login',
-    component: Login
+    component: Login,
+    meta: {
+      isHiddenFooter: true
+    }
   }]
