@@ -13,7 +13,7 @@ export function getCategoryList(){
   // return ajax("/goos.json")
   // 对象形式
   return ajax({
-    url: 'http://localhost:8081/JSON/goods.json',
+    url: 'http://localhost:8080/JSON/goods.json',
     method: "get"
   })
 }

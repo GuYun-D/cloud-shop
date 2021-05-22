@@ -10,7 +10,7 @@ import 'nprogress/nprogress.css'
  * 配置通用路径和超时时间
  */
 const service = axios.create({
-  // baseURL: 'http://localhost: 8081/',
+  // baseURL: 'http://localhost: 8080/',
   timeout: 20000
 })
 
