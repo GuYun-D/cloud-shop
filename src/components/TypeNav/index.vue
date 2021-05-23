@@ -1,7 +1,95 @@
 <template>
   <div class="type-nav">
     <div class="container">
-      <h2 class="all">全部商品分类</h2>
+      <div @mouseleave="currentIndex = -1">
+        <h2 class="all">全部商品分类</h2>
+        <div class="sort">
+          <div class="all-sort-list2" @click="toSearch">
+            <div
+              class="item"
+              v-for="(c1, index) in categoryList"
+              :key="c1.cat_id"
+              :class="index === currentIndex ? 'active' : ''"
+              @mouseenter="showSubList(index)"
+            >
+              <h3>
+                <a
+                  href="javascript:;"
+                  :data-cat_name="c1.cat_name"
+                  :data-catid1="c1.cat_id"
+                  >{{ c1.cat_name }}</a
+                >
+                <!-- <a
+                href="javascript:;"
+                @click="
+                  $router.push(
+                    `/search?cat_name=${c1.cat_name}&cat_id1=${c1.cat_id}`
+                  )
+                "
+                >{{ c1.cat_name }}</a
+              > -->
+                <!-- <router-link
+                to="`/search?cat_name=${c1.cat_name}&cat_id=${c1.cat_id}`"
+                >{{ c1.cat_name }}</router-link
+              > -->
+              </h3>
+              <div class="item-list clearfix">
+                <div class="subitem">
+                  <dl class="fore" v-for="c2 in c1.children" :key="c2.cat_id">
+                    <dt>
+                      <a
+                        href="javascript:;"
+                        :data-cat_name="c2.cat_name"
+                        :data-catid2="c2.cat_id"
+                        >{{ c2.cat_name }}</a
+                      >
+                      <!-- <a
+                      href="javascript:;"
+                      @click="
+                        $router.push(
+                          `/search?cat_name=${c2.cat_name}&cat_id2=${c2.cat_id}`
+                        )
+                      "
+                      >{{ c1.cat_name }}</a
+                    > -->
+
+                      <!-- <router-link
+                      to="`/search?cat_name=${c2.cat_name}&cat_id=${c2.cat_id}`"
+                      >{{ c2.cat_name }}</router-link
+                    > -->
+                    </dt>
+                    <dd>
+                      <em v-for="c3 in c2.children" :key="c3.cat_id">
+                        <a
+                          href="javascript:;"
+                          :data-cat_name="c3.cat_name"
+                          :data-catid3="c3.cat_id"
+                          >{{ c3.cat_name }}</a
+                        >
+                        <!-- <a
+                        href="javascript:;"
+                        @click="
+                          $router.push(
+                            `/search?cat_name=${c3.cat_name}&cat_id3=${c3.cat_id}`
+                          )
+                        "
+                        >{{ c2.cat_name }}</a
+                      > -->
+
+                        <!-- <router-link
+                        to="`/search?cat_name=${c3.cat_name}&cat_id=${c3.cat_id}`"
+                        >{{ c3.cat_name }}</router-link
+                      > -->
+                      </em>
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <nav class="nav">
         <a href="###">服装城</a>
         <a href="###">美妆馆</a>
@@ -12,85 +100,6 @@
         <a href="###">有趣</a>
         <a href="###">秒杀</a>
       </nav>
-      <div class="sort">
-        <div class="all-sort-list2" @click="toSearch">
-          <div class="item" v-for="c1 in categoryList" :key="c1.cat_id">
-            <h3>
-              <a
-                href="javascript:;"
-                :data-cat_name="c1.cat_name"
-                :data-catid1="c1.cat_id"
-                >{{ c1.cat_name }}</a
-              >
-              <!-- <a
-                href="javascript:;"
-                @click="
-                  $router.push(
-                    `/search?cat_name=${c1.cat_name}&cat_id1=${c1.cat_id}`
-                  )
-                "
-                >{{ c1.cat_name }}</a
-              > -->
-              <!-- <router-link
-                to="`/search?cat_name=${c1.cat_name}&cat_id=${c1.cat_id}`"
-                >{{ c1.cat_name }}</router-link
-              > -->
-            </h3>
-            <div class="item-list clearfix">
-              <div class="subitem">
-                <dl class="fore" v-for="c2 in c1.children" :key="c2.cat_id">
-                  <dt>
-                    <a
-                      href="javascript:;"
-                      :data-cat_name="c2.cat_name"
-                      :data-catid2="c2.cat_id"
-                      >{{ c2.cat_name }}</a
-                    >
-                    <!-- <a
-                      href="javascript:;"
-                      @click="
-                        $router.push(
-                          `/search?cat_name=${c2.cat_name}&cat_id2=${c2.cat_id}`
-                        )
-                      "
-                      >{{ c1.cat_name }}</a
-                    > -->
-
-                    <!-- <router-link
-                      to="`/search?cat_name=${c2.cat_name}&cat_id=${c2.cat_id}`"
-                      >{{ c2.cat_name }}</router-link
-                    > -->
-                  </dt>
-                  <dd>
-                    <em v-for="c3 in c2.children" :key="c3.cat_id">
-                      <a
-                        href="javascript:;"
-                        :data-cat_name="c3.cat_name"
-                        :data-catid3="c3.cat_id"
-                        >{{ c3.cat_name }}</a
-                      >
-                      <!-- <a
-                        href="javascript:;"
-                        @click="
-                          $router.push(
-                            `/search?cat_name=${c3.cat_name}&cat_id3=${c3.cat_id}`
-                          )
-                        "
-                        >{{ c2.cat_name }}</a
-                      > -->
-
-                      <!-- <router-link
-                        to="`/search?cat_name=${c3.cat_name}&cat_id=${c3.cat_id}`"
-                        >{{ c3.cat_name }}</router-link
-                      > -->
-                    </em>
-                  </dd>
-                </dl>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -102,9 +111,19 @@
  * 在模板中动态显示
  */
 import { mapState } from "vuex";
+// import _ from "lodash"
+// 按需引入
+import throttle from "lodash/throttle";
 
 export default {
   name: "TypeNav",
+  data() {
+    return {
+      // 控制二三级分类的显示
+      currentIndex: -1,
+    };
+  },
+
   computed: {
     categoryList() {
       return this.$store.state.home.categoryList;
@@ -124,8 +143,8 @@ export default {
       const target = event.target;
       // console.dir(target);
       const data = target.dataset;
-      const {catid1, catid2, catid3} = data
-      let catname = data.cat_name
+      const { catid1, catid2, catid3 } = data;
+      let catname = data.cat_name;
 
       // if (target.tagName.toUpperCase() === "A") {
       if (catname) {
@@ -147,6 +166,17 @@ export default {
         });
       }
     },
+
+    /**
+     * 调用的频率太高了
+     * 节流前：
+     *     showSubList(index){
+     *          this.currentIndex = index
+     *      }
+     */
+    showSubList: throttle(function (index) {
+      this.currentIndex = index;
+    }, 200),
   },
 };
 </script>
@@ -261,10 +291,13 @@ export default {
             }
           }
 
-          &:hover {
+          &.active {
+            background-color: #ccc;
             .item-list {
               display: block;
             }
+
+            transition: all 0.8s;
           }
         }
       }
