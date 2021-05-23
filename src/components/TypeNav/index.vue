@@ -13,24 +13,76 @@
         <a href="###">秒杀</a>
       </nav>
       <div class="sort">
-        <div class="all-sort-list2">
+        <div class="all-sort-list2" @click="toSearch">
           <div class="item" v-for="c1 in categoryList" :key="c1.cat_id">
             <h3>
-              <a href="">{{ c1.cat_name }}</a>
+              <a
+                href="javascript:;"
+                :data-cat_name="c1.cat_name"
+                :data-cat_id1="c1.cat_id"
+                >{{ c1.cat_name }}</a
+              >
+              <!-- <a
+                href="javascript:;"
+                @click="
+                  $router.push(
+                    `/search?cat_name=${c1.cat_name}&cat_id1=${c1.cat_id}`
+                  )
+                "
+                >{{ c1.cat_name }}</a
+              > -->
+              <!-- <router-link
+                to="`/search?cat_name=${c1.cat_name}&cat_id=${c1.cat_id}`"
+                >{{ c1.cat_name }}</router-link
+              > -->
             </h3>
             <div class="item-list clearfix">
               <div class="subitem">
-                <dl
-                  class="fore"
-                  v-for="c2 in c1.children"
-                  :key="c2.cat_id"
-                >
+                <dl class="fore" v-for="c2 in c1.children" :key="c2.cat_id">
                   <dt>
-                    <a href="">{{ c2.cat_name }}</a>
+                    <a
+                      href="javascript:;"
+                      :data-cat_name="c2.cat_name"
+                      :data-cat_id2="c2.cat_id"
+                      >{{ c2.cat_name }}</a
+                    >
+                    <!-- <a
+                      href="javascript:;"
+                      @click="
+                        $router.push(
+                          `/search?cat_name=${c2.cat_name}&cat_id2=${c2.cat_id}`
+                        )
+                      "
+                      >{{ c1.cat_name }}</a
+                    > -->
+
+                    <!-- <router-link
+                      to="`/search?cat_name=${c2.cat_name}&cat_id=${c2.cat_id}`"
+                      >{{ c2.cat_name }}</router-link
+                    > -->
                   </dt>
                   <dd>
                     <em v-for="c3 in c2.children" :key="c3.cat_id">
-                      <a href="">{{ c3.cat_name }}</a>
+                      <a
+                        href="javascript:;"
+                        :data-cat_name="c3.cat_name"
+                        :data-cat_id3="c3.cat_id"
+                        >{{ c3.cat_name }}</a
+                      >
+                      <!-- <a
+                        href="javascript:;"
+                        @click="
+                          $router.push(
+                            `/search?cat_name=${c3.cat_name}&cat_id3=${c3.cat_id}`
+                          )
+                        "
+                        >{{ c2.cat_name }}</a
+                      > -->
+
+                      <!-- <router-link
+                        to="`/search?cat_name=${c3.cat_name}&cat_id=${c3.cat_id}`"
+                        >{{ c3.cat_name }}</router-link
+                      > -->
                     </em>
                   </dd>
                 </dl>
@@ -54,18 +106,45 @@ import { mapState } from "vuex";
 export default {
   name: "TypeNav",
   computed: {
-    // categoryList() {
-    //   return this.$store.state.home.categoryList;
-    // },
+    categoryList() {
+      return this.$store.state.home.categoryList;
+    },
     /**
      * import { mapState } from "vuex";
      * ...mapState["categoryList"]
      * 这种写法等同于 return this.$store.state.categoryList;
      * 只适用于单模块编程
      */
-    ...mapState({
-      categoryList: state => state.home.categoryList  // 函数接受的的总状态，返回值作为计算属性值
-    })
+    // ...mapState({
+    //   categoryList: state => state.home.categoryList  // 函数接受的的总状态，返回值作为计算属性值
+    // })
+  },
+  methods: {
+    toSearch(event) {
+      const target = event.target;
+      console.dir(target);
+      const { catname, catid1, catid2, catid3 } = target.dataset;
+
+      // if (target.tagName.toUpperCase() === "A") {
+      if (catName) {
+        const query = {
+          catName: catname,
+        };
+
+        if (catid1) {
+          query.catId1 = catid1;
+        } else if (catid2) {
+          query.catId2 = catid2;
+        } else if (catid3) {
+          query.catId3 = catid3;
+        }
+
+        this.$router.push({
+          name: "search",
+          query
+        });
+      }
+    },
   },
 };
 </script>
