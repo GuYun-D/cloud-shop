@@ -7,29 +7,24 @@
 </template>
 
 <script>
-import Header from './components/Header'
-import Footer from './components/Footer'
-
-import {getCategoryList} from './api'
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
     Header,
-    Footer
+    Footer,
   },
 
-  mounted(){
-    // 异步获取三级分类列表
-    getCategoryList().then(res => {
-      console.log(res);
-    })
-  }
-}
+  mounted() {
+    // 请求获取三级分类
+    this.$store.dispatch('getCategoryList')
+  },
+};
 </script>
 
 <style lang="less" scoped>
-
 </style>>
 
 </style>

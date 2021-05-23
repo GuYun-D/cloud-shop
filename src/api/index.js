@@ -7,7 +7,7 @@ import ajax from './ajax.js'
  * 首页三级分类
  */
 
-export function getCategoryList(){
+export function reqCategoryList(){
   // return ajax.get('/goods.json')
   // get参数，不带参数
   // return ajax("/goos.json")
