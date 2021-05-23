@@ -19,7 +19,7 @@
               <a
                 href="javascript:;"
                 :data-cat_name="c1.cat_name"
-                :data-cat_id1="c1.cat_id"
+                :data-catid1="c1.cat_id"
                 >{{ c1.cat_name }}</a
               >
               <!-- <a
@@ -43,7 +43,7 @@
                     <a
                       href="javascript:;"
                       :data-cat_name="c2.cat_name"
-                      :data-cat_id2="c2.cat_id"
+                      :data-catid2="c2.cat_id"
                       >{{ c2.cat_name }}</a
                     >
                     <!-- <a
@@ -66,7 +66,7 @@
                       <a
                         href="javascript:;"
                         :data-cat_name="c3.cat_name"
-                        :data-cat_id3="c3.cat_id"
+                        :data-catid3="c3.cat_id"
                         >{{ c3.cat_name }}</a
                       >
                       <!-- <a
@@ -122,11 +122,13 @@ export default {
   methods: {
     toSearch(event) {
       const target = event.target;
-      console.dir(target);
-      const { catname, catid1, catid2, catid3 } = target.dataset;
+      // console.dir(target);
+      const data = target.dataset;
+      const {catid1, catid2, catid3} = data
+      let catname = data.cat_name
 
       // if (target.tagName.toUpperCase() === "A") {
-      if (catName) {
+      if (catname) {
         const query = {
           catName: catname,
         };
@@ -141,7 +143,7 @@ export default {
 
         this.$router.push({
           name: "search",
-          query
+          query,
         });
       }
     },
