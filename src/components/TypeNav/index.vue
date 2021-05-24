@@ -1,7 +1,7 @@
 <template>
   <div class="type-nav">
     <div class="container">
-      <div @mouseleave="currentIndex = -1">
+      <div @mouseleave="currentIndex = -2" @mouseenter="currentIndex = -1">
         <h2 class="all">全部商品分类</h2>
         <div class="sort">
           <div class="all-sort-list2" @click="toSearch">
@@ -120,7 +120,7 @@ export default {
   data() {
     return {
       // 控制二三级分类的显示
-      currentIndex: -1,
+      currentIndex: -2,
     };
   },
 
@@ -174,9 +174,19 @@ export default {
      *          this.currentIndex = index
      *      }
      */
-    showSubList: throttle(function (index) {
-      this.currentIndex = index;
-    }, 200),
+    showSubList: throttle(
+      function (index) {
+        // 只有当还没有离开整个分类的div时才更新下标
+        if (this.currentIndex !== -2) {
+          this.currentIndex = index;
+        }
+        // this.currentIndex = index;
+      },
+      200,
+      // {
+      //   trailing: false, // 最后一次事件不做延迟处理
+      // }
+    ),
   },
 };
 </script>

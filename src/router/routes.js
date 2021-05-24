@@ -8,6 +8,9 @@ import Login from '@/views/Login'
 
 export default
   [{
+    path: '/',
+    redirect: '/home'
+  }, {
     path: '/home',
     component: Home
   }, {
