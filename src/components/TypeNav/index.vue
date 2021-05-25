@@ -3,23 +3,24 @@
     <div class="container">
       <div @mouseleave="hideFirst" @mouseenter="showFirst">
         <h2 class="all">全部商品分类</h2>
-        <div class="sort" v-show="isShowFirst">
-          <div class="all-sort-list2" @click="toSearch">
-            <div
-              class="item"
-              v-for="(c1, index) in categoryList"
-              :key="c1.cat_id"
-              :class="index === currentIndex ? 'active' : ''"
-              @mouseenter="showSubList(index)"
-            >
-              <h3>
-                <a
-                  href="javascript:;"
-                  :data-cat_name="c1.cat_name"
-                  :data-catid1="c1.cat_id"
-                  >{{ c1.cat_name }}</a
-                >
-                <!-- <a
+        <transition name="slide">
+          <div class="sort" v-show="isShowFirst">
+            <div class="all-sort-list2" @click="toSearch">
+              <div
+                class="item"
+                v-for="(c1, index) in categoryList"
+                :key="c1.cat_id"
+                :class="index === currentIndex ? 'active' : ''"
+                @mouseenter="showSubList(index)"
+              >
+                <h3>
+                  <a
+                    href="javascript:;"
+                    :data-cat_name="c1.cat_name"
+                    :data-catid1="c1.cat_id"
+                    >{{ c1.cat_name }}</a
+                  >
+                  <!-- <a
                 href="javascript:;"
                 @click="
                   $router.push(
@@ -28,22 +29,22 @@
                 "
                 >{{ c1.cat_name }}</a
               > -->
-                <!-- <router-link
+                  <!-- <router-link
                 to="`/search?cat_name=${c1.cat_name}&cat_id=${c1.cat_id}`"
                 >{{ c1.cat_name }}</router-link
               > -->
-              </h3>
-              <div class="item-list clearfix">
-                <div class="subitem">
-                  <dl class="fore" v-for="c2 in c1.children" :key="c2.cat_id">
-                    <dt>
-                      <a
-                        href="javascript:;"
-                        :data-cat_name="c2.cat_name"
-                        :data-catid2="c2.cat_id"
-                        >{{ c2.cat_name }}</a
-                      >
-                      <!-- <a
+                </h3>
+                <div class="item-list clearfix">
+                  <div class="subitem">
+                    <dl class="fore" v-for="c2 in c1.children" :key="c2.cat_id">
+                      <dt>
+                        <a
+                          href="javascript:;"
+                          :data-cat_name="c2.cat_name"
+                          :data-catid2="c2.cat_id"
+                          >{{ c2.cat_name }}</a
+                        >
+                        <!-- <a
                       href="javascript:;"
                       @click="
                         $router.push(
@@ -53,20 +54,20 @@
                       >{{ c1.cat_name }}</a
                     > -->
 
-                      <!-- <router-link
+                        <!-- <router-link
                       to="`/search?cat_name=${c2.cat_name}&cat_id=${c2.cat_id}`"
                       >{{ c2.cat_name }}</router-link
                     > -->
-                    </dt>
-                    <dd>
-                      <em v-for="c3 in c2.children" :key="c3.cat_id">
-                        <a
-                          href="javascript:;"
-                          :data-cat_name="c3.cat_name"
-                          :data-catid3="c3.cat_id"
-                          >{{ c3.cat_name }}</a
-                        >
-                        <!-- <a
+                      </dt>
+                      <dd>
+                        <em v-for="c3 in c2.children" :key="c3.cat_id">
+                          <a
+                            href="javascript:;"
+                            :data-cat_name="c3.cat_name"
+                            :data-catid3="c3.cat_id"
+                            >{{ c3.cat_name }}</a
+                          >
+                          <!-- <a
                         href="javascript:;"
                         @click="
                           $router.push(
@@ -76,18 +77,19 @@
                         >{{ c2.cat_name }}</a
                       > -->
 
-                        <!-- <router-link
+                          <!-- <router-link
                         to="`/search?cat_name=${c3.cat_name}&cat_id=${c3.cat_id}`"
                         >{{ c3.cat_name }}</router-link
                       > -->
-                      </em>
-                    </dd>
-                  </dl>
+                        </em>
+                      </dd>
+                    </dl>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </transition>
       </div>
 
       <nav class="nav">
@@ -123,7 +125,7 @@ export default {
       currentIndex: -2,
 
       // 控制一级分类的显示与隐藏
-      isShowFirst: false
+      isShowFirst: false,
     };
   },
 
@@ -185,33 +187,33 @@ export default {
         }
         // this.currentIndex = index;
       },
-      200,
+      200
       // {
       //   trailing: false, // 最后一次事件不做延迟处理
       // }
     ),
 
-    showFirst(){
-      this.currentIndex = -1
-      this.isShowFirst = true
+    showFirst() {
+      this.currentIndex = -1;
+      this.isShowFirst = true;
     },
 
-    hideFirst(){
-      this.currentIndex = -2
-      if(this.$route.path !== '/home'){
-        this.isShowFirst = false
+    hideFirst() {
+      this.currentIndex = -2;
+      if (this.$route.path !== "/home") {
+        this.isShowFirst = false;
         console.log(this.$route.path);
       }
-    }
+    },
   },
 
-  created(){
+  created() {
     // 判断当前路由是否是home，如果是就显示一级分类
-    const path = this.$route.path
-    if(path === '/' || path === '/home'){
-      this.isShowFirst = true
+    const path = this.$route.path;
+    if (path === "/" || path === "/home") {
+      this.isShowFirst = true;
     }
-  }
+  },
 };
 </script>
 
@@ -255,6 +257,16 @@ export default {
       position: absolute;
       background: #fafafa;
       z-index: 999;
+
+      &.slide-enter-active,
+      &.slide-leave-actibe {
+        transition: all 0.6s;
+      }
+      
+      &.slide-enter, &.slide-leave-to{
+        opacity: 0;
+        height: 0;
+      }
 
       .all-sort-list2 {
         .item {
