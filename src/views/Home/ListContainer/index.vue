@@ -3,12 +3,12 @@
     <div class="sortList clearfix">
       <div class="center">
         <!--banner轮播-->
-        <div class="swiper-container" id="mySwiper">
+        <div class="swiper-container" id="mySwiper" ref="swiper">
           <div class="swiper-wrapper">
             <div class="swiper-slide">
               <img src="./images/banner1.jpg" />
             </div>
-            <!-- <div class="swiper-slide">
+            <div class="swiper-slide">
               <img src="./images/banner2.jpg" />
             </div>
             <div class="swiper-slide">
@@ -16,7 +16,7 @@
             </div>
             <div class="swiper-slide">
               <img src="./images/banner4.jpg" />
-            </div> -->
+            </div>
           </div>
           <!-- 如果需要分页器 -->
           <div class="swiper-pagination"></div>
@@ -100,8 +100,33 @@
 </template>
 
 <script>
+import Swiper from "swiper";
+
 export default {
   name: "TodyRecomment",
+
+  mounted() {
+    // swiper必须在列表显示之后创建才有效
+    new Swiper(this.$refs.swiper, {
+      // direction: "vertical", // 垂直切换选项
+      loop: true, // 循环模式选项
+      autoplay: {
+        delay: 4000,
+        disableOnInteraction: false
+      },
+
+      // 如果需要分页器
+      pagination: {
+        el: ".swiper-pagination",
+      },
+
+      // 如果需要前进后退按钮
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+    });
+  },
 };
 </script>
 

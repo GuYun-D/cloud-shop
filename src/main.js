@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import App from './App.vue'
 import store from './store'
+import "swiper/css/swiper.css";
+
 
 // 注册路由器
 import router from './router/index'
