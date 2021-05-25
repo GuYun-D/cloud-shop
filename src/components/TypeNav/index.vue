@@ -1,9 +1,9 @@
 <template>
   <div class="type-nav">
     <div class="container">
-      <div @mouseleave="currentIndex = -2" @mouseenter="currentIndex = -1">
+      <div @mouseleave="hideFirst" @mouseenter="showFirst">
         <h2 class="all">全部商品分类</h2>
-        <div class="sort">
+        <div class="sort" v-show="isShowFirst">
           <div class="all-sort-list2" @click="toSearch">
             <div
               class="item"
@@ -121,6 +121,9 @@ export default {
     return {
       // 控制二三级分类的显示
       currentIndex: -2,
+
+      // 控制一级分类的显示与隐藏
+      isShowFirst: false
     };
   },
 
@@ -187,7 +190,28 @@ export default {
       //   trailing: false, // 最后一次事件不做延迟处理
       // }
     ),
+
+    showFirst(){
+      this.currentIndex = -1
+      this.isShowFirst = true
+    },
+
+    hideFirst(){
+      this.currentIndex = -2
+      if(this.$route.path !== '/home'){
+        this.isShowFirst = false
+        console.log(this.$route.path);
+      }
+    }
   },
+
+  created(){
+    // 判断当前路由是否是home，如果是就显示一级分类
+    const path = this.$route.path
+    if(path === '/' || path === '/home'){
+      this.isShowFirst = true
+    }
+  }
 };
 </script>
 
@@ -241,6 +265,7 @@ export default {
             overflow: hidden;
             padding: 0 20px;
             margin: 0;
+            letter-spacing: 5px;
 
             a {
               color: #333;
