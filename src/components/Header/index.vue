@@ -73,6 +73,7 @@ export default {
 
       const locatiion = {
         name: "search",
+        queuery: this.$route.query
       };
 
       if (this.keywords) {

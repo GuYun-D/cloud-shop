@@ -165,10 +165,16 @@ export default {
           query.catId3 = catid3;
         }
 
-        this.$router.push({
+        const location = {
           name: "search",
           query,
-        });
+          /**
+           * 需要携带上当前已有的params参数
+           */
+          params: this.$route.params
+        }
+
+        this.$router.push(location);
       }
     },
 
