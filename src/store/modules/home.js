@@ -2,12 +2,13 @@
  * 首页相关的数据的子模块
  */
 
-import { reqCategoryList } from "@/api"
+import { reqCategoryList, reqBannerList } from "@/api"
 
 export default {
   state: {
     categoryList: [],
-    xxx: "acd"
+    xxx: "acd",
+    bannerList: []
   },
   mutations: {
     /**
@@ -20,7 +21,15 @@ export default {
     // 接收保存三级分类列表
     RECEIVE_CATEGORY_LIST(state, categoryList){
       state.categoryList = categoryList
+    },
+
+    /**
+     * bannerList
+     */
+    RECEIVE_BANNER_LIST(state, bannerList){
+      state.bannerList = bannerList
     }
+
   },
   actions: {
     /**
@@ -38,6 +47,17 @@ export default {
       if(result.meta.status === 200){
         const categoryList =  result.message.splice(0, 15)
         commit('RECEIVE_CATEGORY_LIST', categoryList)
+      }
+    },
+
+    /**
+     * 获取轮播列表
+     */
+    async getBannerList({commit}){
+      const result = await reqBannerList()
+      if(result.status === 200){
+        const bannerList = result.data
+        commit('RECEIVE_BANNER_LIST', bannerList)
       }
     }
   },

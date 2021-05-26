@@ -20,6 +20,7 @@ export default {
   mounted() {
     // 请求获取三级分类
     this.$store.dispatch('getCategoryList')
+    this.$store.dispatch('getBannerList')
   },
 };
 </script>

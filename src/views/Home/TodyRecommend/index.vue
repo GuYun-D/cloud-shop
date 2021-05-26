@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  name: "ListContainer",
+  name: "TodyRecommend",
 };
 </script>
 
