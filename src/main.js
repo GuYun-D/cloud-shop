@@ -3,6 +3,10 @@ import App from './App.vue'
 import store from './store'
 import "swiper/css/swiper.css";
 
+/**
+ * mockjs不需要暴漏函数，直接打包就可以通过ajax访问
+ */
+import './mock/mockServer'
 
 // 注册路由器
 import router from './router/index'
