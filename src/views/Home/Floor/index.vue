@@ -93,8 +93,10 @@
 </template>
 
 <script>
+
 export default {
   name: "Floor",
+  props: ['floor']
 };
 </script>
 

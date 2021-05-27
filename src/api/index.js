@@ -31,11 +31,11 @@ export function reqBannerList() {
  * mock接口
  */
 
-function reqFloors() {
+export function reqFloors() {
   return ajax("http://localhost:8080/mock/floors")
 }
 
 /**
- * 存在问题：浏览器没有发出请求，被拦截了，请求还没有到浏览器之前就被拦截了
+ * 注意：浏览器没有发出请求，被拦截了，请求还没有到浏览器之前就被拦截了
  */
-reqFloors().then(res => console.log(res))
+// reqFloors().then(res => console.log(res))
