@@ -2,7 +2,6 @@
  * 包含应用的所有接口的接口请求函数
  */
 import ajax from './ajax.js'
-
 /**
  * 首页三级分类
  */
@@ -27,3 +26,16 @@ export function reqBannerList() {
     method: "get"
   })
 }
+
+/**
+ * mock接口
+ */
+
+function reqFloors() {
+  return ajax("http://localhost:8080/mock/floors")
+}
+
+/**
+ * 存在问题：浏览器没有发出请求，被拦截了，请求还没有到浏览器之前就被拦截了
+ */
+reqFloors().then(res => console.log(res))

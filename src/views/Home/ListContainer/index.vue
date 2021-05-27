@@ -5,13 +5,13 @@
         <!--banner轮播-->
         <div class="swiper-container" id="mySwiper" ref="swiper">
           <div class="swiper-wrapper">
-            <div
+            <!-- <div
               class="swiper-slide"
               v-for="banner in bannerList"
               :key="banner.id"
             >
               <img :src="banner.url" style="height: 464px; width: 721px" />
-            </div>
+            </div> -->
           </div>
           <!-- 如果需要分页器 -->
           <div class="swiper-pagination"></div>
@@ -108,36 +108,36 @@ export default {
     }),
   },
 
-  watch: {
-    bannerList() {
-      /**
-       * $nextick(callback)
-       * 将回调延迟到下次dom更新循环之后执行，在修改数据之后立即使用他，然后等dom更新
-       */
-      this.$nextTick(
-        // swiper必须在列表显示之后创建才有效
-        new Swiper(this.$refs.swiper, {
-          // direction: "vertical", // 垂直切换选项
-          loop: true, // 循环模式选项
-          autoplay: {
-            delay: 4000,
-            disableOnInteraction: false,
-          },
+  // watch: {
+  //   bannerList() {
+  //     /**
+  //      * $nextick(callback)
+  //      * 将回调延迟到下次dom更新循环之后执行，在修改数据之后立即使用他，然后等dom更新
+  //      */
+  //     this.$nextTick(
+  //       // swiper必须在列表显示之后创建才有效
+  //       new Swiper(this.$refs.swiper, {
+  //         // direction: "vertical", // 垂直切换选项
+  //         loop: true, // 循环模式选项
+  //         autoplay: {
+  //           delay: 4000,
+  //           disableOnInteraction: false,
+  //         },
 
-          // 如果需要分页器
-          pagination: {
-            el: ".swiper-pagination",
-          },
+  //         // 如果需要分页器
+  //         pagination: {
+  //           el: ".swiper-pagination",
+  //         },
 
-          // 如果需要前进后退按钮
-          navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-          },
-        })
-      );
-    },
-  },
+  //         // 如果需要前进后退按钮
+  //         navigation: {
+  //           nextEl: ".swiper-button-next",
+  //           prevEl: ".swiper-button-prev",
+  //         },
+  //       })
+  //     );
+  //   },
+  // },
 };
 </script>
 

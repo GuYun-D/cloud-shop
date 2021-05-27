@@ -6,4 +6,4 @@ import Mock from 'mockjs'
 import floors from './floors.json'
 
 // 提供楼层接口
-Mock.mock('/mock/floors', {code: 200, data: floors})
+Mock.mock('http://localhost:8080/mock/floors', 'get' , {code: 200, data: floors})
