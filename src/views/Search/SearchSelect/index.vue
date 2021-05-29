@@ -158,8 +158,13 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
+
 export default {
-  name: 'SearchSelect'
+  name: 'SearchSelect',
+  computed: {
+    ...mapGetters(['trademarkList', 'attrsList'])
+  }
 };
 </script>
 

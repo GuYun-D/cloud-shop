@@ -39,3 +39,11 @@ export function reqFloors() {
  * 注意：不需要代理服务器，浏览器没有发出请求，被拦截了，请求还没有到浏览器之前就被拦截了
  */
 // reqFloors().then(res => console.log(res))
+
+/**
+ * 搜索分页
+ */
+
+export function reqSearch(searchParams){
+  return ajax.post('http://localhost:8080/mock/search', searchParams)
+}

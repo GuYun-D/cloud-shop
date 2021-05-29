@@ -47,31 +47,27 @@
           </div>
           <div class="goods-list">
             <ul class="yui3-g">
-              <li class="yui3-u-1-5">
+              <li class="yui3-u-1-5" v-for="item  in goodsList" :key="item.id">
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="item.html" target="_blank"
-                      ><img src="./images/mobile01.png"
+                    <a href="javascrip:;"
+                      ><img :src="item.defaultImg"
                     /></a>
                   </div>
                   <div class="price">
                     <strong>
-                      <em>¥</em>
-                      <i>6088.00</i>
+                      <em> ¥ </em>
+                      <i>{{item.price}}</i>
                     </strong>
                   </div>
                   <div class="attr">
                     <a
-                      target="_blank"
-                      href="item.html"
-                      title="促销信息，下单即赠送三个月CIBN视频会员卡！【小米电视新品4A 58 火爆预约中】"
-                      >Apple苹果iPhone 6s (A1699)Apple苹果iPhone 6s
-                      (A1699)Apple苹果iPhone 6s (A1699)Apple苹果iPhone 6s
-                      (A1699)</a
+                      href="javascrip:;"
+                      >{{item.title}}</a
                     >
                   </div>
                   <div class="commit">
-                    <i class="command">已有<span>2000</span>人评价</i>
+                    <i class="command">已有<span>{{item.appraise}}</span>人评价</i>
                   </div>
                   <div class="operate">
                     <a
@@ -86,7 +82,7 @@
                   </div>
                 </div>
               </li>
-              <li class="yui3-u-1-5">
+              <!-- <li class="yui3-u-1-5">
                 <div class="list-wrap">
                   <div class="p-img">
                     <img src="./images/mobile02.png" />
@@ -418,7 +414,7 @@
                     >
                   </div>
                 </div>
-              </li>
+              </li> -->
             </ul>
           </div>
           <div class="fr page">
@@ -543,6 +539,8 @@
 <script>
 import TypeNav from "../../components/TypeNav/index";
 import SearchSelect from "./SearchSelect";
+// import { mapState } from "vuex";
+import { mapGetters } from 'vuex'
 
 export default {
   name: "Search",
@@ -552,8 +550,23 @@ export default {
 
   components: {
     TypeNav,
-    SearchSelect
-  }
+    SearchSelect,
+  },
+
+  mounted() {
+    this.$store.dispatch("getProductList", {
+      pageNo: 1,
+      pageSize: 10,
+    });
+  },
+
+  computed: {
+    // goodsList的初始值是空数组
+    // ...mapState({
+    //   goodsList: (state) => state.search.productList.goodsList,
+    // }),
+    ...mapGetters(['goodsList'])
+  },
 };
 </script>
 
@@ -620,7 +633,7 @@ export default {
         }
       }
     }
-    
+
     .details {
       margin-bottom: 5px;
       .sui-navbar {
