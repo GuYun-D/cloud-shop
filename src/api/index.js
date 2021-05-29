@@ -36,6 +36,6 @@ export function reqFloors() {
 }
 
 /**
- * 注意：浏览器没有发出请求，被拦截了，请求还没有到浏览器之前就被拦截了
+ * 注意：不需要代理服务器，浏览器没有发出请求，被拦截了，请求还没有到浏览器之前就被拦截了
  */
 // reqFloors().then(res => console.log(res))

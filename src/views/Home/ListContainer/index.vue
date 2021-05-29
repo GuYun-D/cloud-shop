@@ -12,6 +12,18 @@
             >
               <img :src="banner.url" style="height: 464px; width: 721px" />
             </div> -->
+            <div class="swiper-slide">
+              <img src="./images/banner1.jpg" />
+            </div>
+            <div class="swiper-slide">
+              <img src="./images/banner2.jpg" />
+            </div>
+            <div class="swiper-slide">
+              <img src="./images/banner3.jpg" />
+            </div>
+            <div class="swiper-slide">
+              <img src="./images/banner4.jpg" />
+            </div>
           </div>
           <!-- 如果需要分页器 -->
           <div class="swiper-pagination"></div>
@@ -106,6 +118,28 @@ export default {
     ...mapState({
       bannerList: (state) => state.home.bannerList,
     }),
+  },
+
+  mounted() {
+    new Swiper(this.$refs.swiper, {
+      // direction: "vertical", // 垂直切换选项
+      loop: true, // 循环模式选项
+      autoplay: {
+        delay: 4000,
+        disableOnInteraction: false,
+      },
+
+      // 如果需要分页器
+      pagination: {
+        el: ".swiper-pagination",
+      },
+
+      // 如果需要前进后退按钮
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+    });
   },
 
   // watch: {
