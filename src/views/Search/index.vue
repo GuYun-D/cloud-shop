@@ -281,7 +281,7 @@ export default {
       this.options.catName = "";
       // this.getShopList()
 
-// 删除对应标签只是置空了当前数据，地址栏中还是存在参数，所以删除了哪个标签，就跳回search，不带上该类型参数
+      // 删除对应标签只是置空了当前数据，地址栏中还是存在参数，所以删除了哪个标签，就跳回search，不带上该类型参数
       this.$router.push({
         name: "search",
         params: this.$route.params,

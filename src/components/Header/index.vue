@@ -73,7 +73,7 @@ export default {
 
       const locatiion = {
         name: "search",
-        queuery: this.$route.query
+        query: this.$route.query,
       };
 
       if (this.keywords) {
@@ -81,8 +81,11 @@ export default {
           keywords: this.keywords,
         };
       }
+
       // 对象写法
       this.$router.push(locatiion);
+
+      this.keywords = "";
     },
   },
 };
