@@ -212,22 +212,24 @@ export default {
   name: "Search",
   data() {
     return {
-      options: {// 分类等级Id
-      category1Id: "",
-      category2Id: "",
-      category3Id: "",
-      // 分类名称
-      categoryName: "",
-      // 搜索关键字
-      keywords: "",
-      // ["属性id: 属性值：属性名"]
-      props: [],
-      // 品牌：id:名牌名称
-      trademark: "",
-      // 排序方式   1:综合； 2：价格asc；升序， desc：降序
-      order: "",
-      pageNo: 1,
-      pageSize: 10,}
+      options: {
+        // 分类等级Id
+        category1Id: "",
+        category2Id: "",
+        category3Id: "",
+        // 分类名称
+        categoryName: "",
+        // 搜索关键字
+        keywords: "",
+        // ["属性id: 属性值：属性名"]
+        props: [],
+        // 品牌：id:名牌名称
+        trademark: "",
+        // 排序方式   1:综合； 2：价格asc；升序， desc：降序
+        order: "",
+        pageNo: 1,
+        pageSize: 10,
+      },
     };
   },
 
@@ -237,31 +239,42 @@ export default {
   },
 
   created() {
-    // 取出参数数据
-    const { keywords } = this.$route.params;
-    const {
-      category1Id,
-      category2Id,
-      category3Id,
-      categoryName,
-    } = this.$route.query;
-    // 保存到options中
-    /**
+    this.updataParams();
+    this.getShopList()
+  },
+
+  methods: {
+    // 更新参数属性
+    updataParams() {
+      // 取出参数数据
+      const { keywords } = this.$route.params;
+      const {
+        category1Id,
+        category2Id,
+        category3Id,
+        categoryName,
+      } = this.$route.query;
+      // 保存到options中
+      /**
      * 将options的内容覆盖
       this.options = {
         ...this.options
       }
      */
-    this.options = {
-      ...this.options,
-      keywords,
-      categoryName,
-      category1Id,
-      category2Id,
-      category3Id,
-    };
+      this.options = {
+        ...this.options,
+        keywords,
+        categoryName,
+        category1Id,
+        category2Id,
+        category3Id,
+      };
+    },
 
-    this.$store.dispatch("getProductList", this.options);
+    // 发送搜索请求
+    getShopList() {
+      this.$store.dispatch("getProductList", this.options);
+    },
   },
 
   computed: {
@@ -270,6 +283,17 @@ export default {
     //   goodsList: (state) => state.search.productList.goodsList,
     // }),
     ...mapGetters(["goodsList"]),
+  },
+
+  /**
+   * 存在问题：当已经在搜索页面时，再添加搜索条件，初始化的钩子将不再执行，也就不能重新发请求获取数据
+   * 解决：监视路由参数变化
+   */
+  watch: {
+    $route(to, from) {
+      this.updataParams();
+      this.getShopList()
+    },
   },
 };
 </script>
