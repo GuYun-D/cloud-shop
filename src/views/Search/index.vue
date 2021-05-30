@@ -3,7 +3,6 @@
     <TypeNav></TypeNav>
     <div class="main">
       <div class="py-container">
-        <SearchSelect></SearchSelect>
         <!--bread-->
         <div class="bread">
           <ul class="fl sui-breadcrumb">
@@ -18,6 +17,8 @@
             <li class="with-x">OPPO<i>×</i></li>
           </ul>
         </div>
+
+        <SearchSelect></SearchSelect>
 
         <!--details-->
         <div class="details clearfix">
@@ -47,27 +48,25 @@
           </div>
           <div class="goods-list">
             <ul class="yui3-g">
-              <li class="yui3-u-1-5" v-for="item  in goodsList" :key="item.id">
+              <li class="yui3-u-1-5" v-for="item in goodsList" :key="item.id">
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="javascrip:;"
-                      ><img :src="item.defaultImg"
-                    /></a>
+                    <a href="javascrip:;"><img :src="item.defaultImg" /></a>
                   </div>
                   <div class="price">
                     <strong>
                       <em> ¥ </em>
-                      <i>{{item.price}}</i>
+                      <i>{{ item.price }}</i>
                     </strong>
                   </div>
                   <div class="attr">
-                    <a
-                      href="javascrip:;"
-                      >{{item.title}}</a
-                    >
+                    <a href="javascrip:;">{{ item.title }}</a>
                   </div>
                   <div class="commit">
-                    <i class="command">已有<span>{{item.appraise}}</span>人评价</i>
+                    <i class="command"
+                      >已有<span>{{ item.appraise }}</span
+                      >人评价</i
+                    >
                   </div>
                   <div class="operate">
                     <a
@@ -540,7 +539,7 @@
 import TypeNav from "../../components/TypeNav/index";
 import SearchSelect from "./SearchSelect";
 // import { mapState } from "vuex";
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
 export default {
   name: "Search",
@@ -565,7 +564,7 @@ export default {
     // ...mapState({
     //   goodsList: (state) => state.search.productList.goodsList,
     // }),
-    ...mapGetters(['goodsList'])
+    ...mapGetters(["goodsList"]),
   },
 };
 </script>
