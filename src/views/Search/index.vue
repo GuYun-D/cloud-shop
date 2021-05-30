@@ -11,10 +11,12 @@
             </li>
           </ul>
           <ul class="fl sui-tag">
-            <li class="with-x">手机</li>
-            <li class="with-x">iphone<i>×</i></li>
-            <li class="with-x">华为<i>×</i></li>
-            <li class="with-x">OPPO<i>×</i></li>
+            <li class="with-x" v-if="options.catName">
+              {{ options.catName }}<i @click="removeCategory">x</i>
+            </li>
+            <li class="with-x" v-if="options.keywords">
+              {{ options.keywords }}<i @click="removeKeyword">x</i>
+            </li>
           </ul>
         </div>
 
@@ -214,11 +216,11 @@ export default {
     return {
       options: {
         // 分类等级Id
-        category1Id: "",
-        category2Id: "",
-        category3Id: "",
+        catId1: "",
+        catId2: "",
+        catId3: "",
         // 分类名称
-        categoryName: "",
+        catName: "",
         // 搜索关键字
         keywords: "",
         // ["属性id: 属性值：属性名"]
@@ -240,7 +242,7 @@ export default {
 
   created() {
     this.updataParams();
-    this.getShopList()
+    this.getShopList();
   },
 
   methods: {
@@ -248,12 +250,7 @@ export default {
     updataParams() {
       // 取出参数数据
       const { keywords } = this.$route.params;
-      const {
-        category1Id,
-        category2Id,
-        category3Id,
-        categoryName,
-      } = this.$route.query;
+      const { catId1, catId2, catId3, catName } = this.$route.query;
       // 保存到options中
       /**
      * 将options的内容覆盖
@@ -264,16 +261,41 @@ export default {
       this.options = {
         ...this.options,
         keywords,
-        categoryName,
-        category1Id,
-        category2Id,
-        category3Id,
+        catId1,
+        catId2,
+        catId3,
+        catName,
       };
     },
 
     // 发送搜索请求
     getShopList() {
       this.$store.dispatch("getProductList", this.options);
+    },
+
+    // 删除分类条件
+    removeCategory() {
+      this.options.catId1 = "";
+      this.options.catId2 = "";
+      this.options.catId3 = "";
+      this.options.catName = "";
+      // this.getShopList()
+
+// 删除对应标签只是置空了当前数据，地址栏中还是存在参数，所以删除了哪个标签，就跳回search，不带上该类型参数
+      this.$router.push({
+        name: "search",
+        params: this.$route.params,
+      });
+    },
+    // 删除关键字
+    removeKeyword() {
+      this.options.keywords = "";
+      // this.getShopList()
+
+      this.$router.push({
+        name: "search",
+        query: this.$route.query,
+      });
     },
   },
 
@@ -292,7 +314,7 @@ export default {
   watch: {
     $route(to, from) {
       this.updataParams();
-      this.getShopList()
+      this.getShopList();
     },
   },
 };

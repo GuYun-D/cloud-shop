@@ -175,6 +175,9 @@ export default {
         }
 
         this.$router.push(location);
+
+        // 点击之后隐藏一级列表
+        this.hideFirst()
       }
     },
 
