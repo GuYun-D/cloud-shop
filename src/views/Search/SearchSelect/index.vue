@@ -5,18 +5,23 @@
       <div class="fl key brand">品牌</div>
       <div class="value logos">
         <ul class="logo-list">
-          <li v-for="trademark in trademarkList" :key="trademark.tiId">{{trademark.tmName}}</li>
+          <li
+            v-for="trademark in trademarkList"
+            :key="trademark.tmId"
+            @click="setTrademark(`${trademark.tmId}:${trademark.tmName}`)"
+          >
+            {{ trademark.tmName }}
+          </li>
         </ul>
       </div>
     </div>
     <div class="type-wrap" v-for="attrs in attrsList" :key="attrs.attrId">
-      <div class="fl key">{{attrs.attrName}}</div>
+      <div class="fl key">{{ attrs.attrName }}</div>
       <div class="fl value">
         <ul class="type-list">
           <li v-for="value in attrs.attrValueList" :key="value">
-            <a>{{value}}</a>
+            <a>{{ value }}</a>
           </li>
-          
         </ul>
       </div>
       <div class="fl ext"></div>
@@ -25,12 +30,15 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters } from "vuex";
 
 export default {
-  name: 'SearchSelect',
+  name: "SearchSelect",
   computed: {
-    ...mapGetters(['trademarkList', 'attrsList'])
+    ...mapGetters(["trademarkList", "attrsList"]),
+  },
+  props: {
+    setTrademark: Function
   }
 };
 </script>

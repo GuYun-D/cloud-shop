@@ -17,10 +17,13 @@
             <li class="with-x" v-if="options.keywords">
               {{ options.keywords }}<i @click="removeKeyword">x</i>
             </li>
+            <li class="with-x" v-if="options.trademark">
+              {{trademarkName}}<i @click="removeTradmark">x</i>
+            </li>
           </ul>
         </div>
 
-        <SearchSelect></SearchSelect>
+        <SearchSelect :setTrademark="setTrademark"></SearchSelect>
 
         <!--details-->
         <div class="details clearfix">
@@ -240,10 +243,10 @@ export default {
     SearchSelect,
   },
 
-  created() {
-    this.updataParams();
-    this.getShopList();
-  },
+  // created() {
+  //   this.updataParams();
+  //   this.getShopList();
+  // },
 
   methods: {
     // 更新参数属性
@@ -282,7 +285,7 @@ export default {
       // this.getShopList()
 
       // 删除对应标签只是置空了当前数据，地址栏中还是存在参数，所以删除了哪个标签，就跳回search，不带上该类型参数
-      this.$router.push({
+      this.$router.replace({
         name: "search",
         params: this.$route.params,
       });
@@ -292,10 +295,26 @@ export default {
       this.options.keywords = "";
       // this.getShopList()
 
-      this.$router.push({
+      this.$router.replace({
         name: "search",
         query: this.$route.query,
       });
+    },
+    // 删除品牌条件
+    removeTradmark(){
+      this.options.trademark = ''
+      this.getShopList()
+    },
+
+
+    // 设置品牌条件
+    setTrademark(tradmark) {
+      // 如果已经在当前品牌了，直接退出
+      if(this.options.trademark == tradmark) return
+      // 更新options中的属性
+      this.options.trademark = tradmark
+      // 发送请求
+      this.getShopList()
     },
   },
 
@@ -305,6 +324,10 @@ export default {
     //   goodsList: (state) => state.search.productList.goodsList,
     // }),
     ...mapGetters(["goodsList"]),
+
+    trademarkName(){
+      return this.options.trademark.split(':')[1]
+    }
   },
 
   /**
@@ -312,9 +335,13 @@ export default {
    * 解决：监视路由参数变化
    */
   watch: {
-    $route(to, from) {
-      this.updataParams();
-      this.getShopList();
+    $route: {
+      handler(to, from) {
+        this.updataParams();
+        this.getShopList();
+      },
+
+      immediate: true,
     },
   },
 };

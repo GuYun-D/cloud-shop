@@ -171,13 +171,11 @@ export default {
           /**
            * 需要携带上当前已有的params参数
            */
-          params: this.$route.params
-        }
-
+          params: this.$route.params,
+        };
         this.$router.push(location);
-
         // 点击之后隐藏一级列表
-        this.hideFirst()
+        this.hideFirst();
       }
     },
 
@@ -271,8 +269,9 @@ export default {
       &.slide-leave-actibe {
         transition: all 0.6s;
       }
-      
-      &.slide-enter, &.slide-leave-to{
+
+      &.slide-enter,
+      &.slide-leave-to {
         opacity: 0;
         height: 0;
       }

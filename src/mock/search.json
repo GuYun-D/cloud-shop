@@ -4,64 +4,22 @@
     "data": {               
         "trademarkList": [
             {
-                "tmId": 1,
-                "tmName": "索尼（SONY）"
-            }, {
-                "tmId": 2,
-                "tmName": "TCL"
-            }, {
-                "tmId": 3,
-                "tmName": "长虹（CHANGHONG）"
-            }, {
-                "tmId": 4,
-                "tmName": "飞利浦（PHILIPS）"
-            }, {
-                "tmId": 5,
-                "tmName": "风行电视"
-            }, {
-                "tmId": 6,
-                "tmName": "esr 亿色"
-            }, {
-                "tmId": 7,
-                "tmName": "ROCH"
-            }, {
-                "tmId": 8,
-                "tmName": "EXCO"
-            }, {
-                "tmId": 9,
-                "tmName": "BASEUS"
-            }, {
-                "tmId": 10,
-                "tmName": "LENTION"
-            }, {
-                "tmId": 11,
-                "tmName": "PISEN"
-            }, {
-                "tmId": 12,
-                "tmName": "stiger"
-            }, {
-                "tmId": 13,
-                "tmName": "MOMAX"
-            }, {
-                "tmId": 14,
+                "tmId": 0,
                 "tmName": "苹果"
             }, {
-                "tmId": 15,
+                "tmId": 1,
                 "tmName": "小米"
             }, {
-                "tmId": 16,
+                "tmId": 2,
                 "tmName": "华为"
             }, {
-                "tmId": 17,
+                "tmId": 3,
                 "tmName": "oppo"
-            }, {
-                "tmId": 18,
-                "tmName": "viow"
             }
         ],
         "attrsList": [
             {
-                "attrId": 1,
+                "attrId": 0,
                 "attrValueList": [
                     "4G",
                     "6G",
@@ -69,53 +27,47 @@
                 ],
                 "attrName": "运行内存"
             },{
-                "attrId": 2,
+                "attrId": 1,
                 "attrValueList": [
                     "安卓手机",
                     "IOS"
                 ],
                 "attrName": "手机一级"
             },{
-                "attrId": 3,
+                "attrId": 2,
                 "attrValueList": [
                     "小米",
                     "苹果",
-                    "华为"
+                    "华为",
+                    "oppo"
                 ],
                 "attrName": "二级手机"
             },{
+                "attrId": 3,
+                "attrValueList": [
+                    "骁龙439",
+                    "骁龙855",
+                    "plus骁龙730",
+                    "G骁龙845",
+                    "麒麟990",
+                    "5G骁龙76",
+                    " 8GExynos980",
+                    "MTK Helio G85"
+                ],
+                "attrName": "CPU型号"
+            },{
                 "attrId": 4,
                 "attrValueList": [
-                    "4k超清",
-                    "人工智能",
-                    "曲面",
-                    "超薄"
-                ],
-                "attrName": "电视类型"
-            },{
-                "attrId": 5,
-                "attrValueList": [
-                    "60-70",
-                    "70-75",
-                    "60以下",
-                    "75以上"
+                    "6.95英寸及以上",
+                    "6.0～6.24英寸",
+                    " 6.85-6.94英寸",
+                    "6.75-6.84英寸",
+                    "6.65-6.74英寸",
+                    "6.55-6.64英寸",
+                    "6.45-6.54英寸",
+                    "6.35-6.44英寸"
                 ],
                 "attrName": "屏幕尺寸"
-            },{
-                "attrId": 6,
-                "attrValueList": [
-                    "4k超高清",
-                    "12k超高清",
-                    "8k超高清"
-                ],
-                "attrName": "分辨率"
-            },{
-                "attrId": 7,
-                "attrValueList": [
-                    "3.5m",
-                    "3m"
-                ],
-                "attrName": "观看距离"
             }
         ],
         "goodsList": [

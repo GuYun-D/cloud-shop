@@ -20,7 +20,22 @@ const actions = {
   // 根据搜索条件异步获取商品列表
   async getProductList({ commit }, searchParams) {
     const result = await reqSearch(searchParams)
+    const trademarkChangeInfo = searchParams.trademark.split(':')
     if (result.code === 200) {
+      if (trademarkChangeInfo.length === 2) {
+        const showTradmark = result.data.data.trademarkList.splice(trademarkChangeInfo[0], 1)
+        if (trademarkChangeInfo[0] == 0) {
+          const showMobliOne = result.data.data.attrsList[1].attrValueList.pop(1)
+          result.data.data.attrsList[1].attrValueList = [showMobliOne]
+          const showMobliTow = result.data.data.attrsList[2].attrValueList.splice(1, 1)
+          result.data.data.attrsList[2].attrValueList = showMobliTow
+        } else {
+          const showMobliOne = result.data.data.attrsList[1].attrValueList.pop(1)
+          const showMobliTow = result.data.data.attrsList[2].attrValueList.splice(1, 1)
+        }
+
+        result.data.data.trademarkList = showTradmark
+      }
       commit('RECEIVE_PRODUCT_LIST', result.data.data)
     }
   }
