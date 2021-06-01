@@ -18,12 +18,19 @@
               {{ options.keywords }}<i @click="removeKeyword">x</i>
             </li>
             <li class="with-x" v-if="options.trademark">
-              {{trademarkName}}<i @click="removeTradmark">x</i>
+              {{ trademarkName }}<i @click="removeTradmark">x</i>
+            </li>
+
+            <li class="with-x" v-for="(prop, index) in options.props" :key="prop">
+              {{ prop }}<i @click="removeProp(index)">x</i>
             </li>
           </ul>
         </div>
 
-        <SearchSelect :setTrademark="setTrademark"></SearchSelect>
+        <SearchSelect
+          :setTrademark="setTrademark"
+          @addProp="addProp"
+        ></SearchSelect>
 
         <!--details-->
         <div class="details clearfix">
@@ -301,21 +308,35 @@ export default {
       });
     },
     // 删除品牌条件
-    removeTradmark(){
-      this.options.trademark = ''
-      this.getShopList()
+    removeTradmark() {
+      this.options.trademark = "";
+      this.getShopList();
     },
-
 
     // 设置品牌条件
     setTrademark(tradmark) {
       // 如果已经在当前品牌了，直接退出
-      if(this.options.trademark == tradmark) return
+      if (this.options.trademark == tradmark) return;
       // 更新options中的属性
-      this.options.trademark = tradmark
+      this.options.trademark = tradmark;
       // 发送请求
-      this.getShopList()
+      this.getShopList();
     },
+
+    // 设置属性标签
+    addProp(prop) {
+      // 如果已经存在当前条件，不添加
+      const { props } = this.options;
+      if (props.includes(prop)) return;
+      props.push(prop);
+      this.getShopList();
+    },
+
+    removeProp(index){
+      // 删除props中的元素
+      this.options.props.splice(index, 1)
+      this.getShopList()
+    }
   },
 
   computed: {
@@ -325,9 +346,9 @@ export default {
     // }),
     ...mapGetters(["goodsList"]),
 
-    trademarkName(){
-      return this.options.trademark.split(':')[1]
-    }
+    trademarkName() {
+      return this.options.trademark.split(":")[1];
+    },
   },
 
   /**

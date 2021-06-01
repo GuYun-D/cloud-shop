@@ -27,12 +27,12 @@ const actions = {
         if (trademarkChangeInfo[0] == 0) {
           const showMobliOne = result.data.data.attrsList[1].attrValueList.pop(1)
           result.data.data.attrsList[1].attrValueList = [showMobliOne]
-          const showMobliTow = result.data.data.attrsList[2].attrValueList.splice(1, 1)
-          result.data.data.attrsList[2].attrValueList = showMobliTow
         } else {
           const showMobliOne = result.data.data.attrsList[1].attrValueList.pop(1)
-          const showMobliTow = result.data.data.attrsList[2].attrValueList.splice(1, 1)
         }
+
+        const showMobliTow = result.data.data.attrsList[2].attrValueList.splice(trademarkChangeInfo[0], 1)
+        result.data.data.attrsList[2].attrValueList = showMobliTow
 
         result.data.data.trademarkList = showTradmark
       }
