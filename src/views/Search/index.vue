@@ -21,7 +21,11 @@
               {{ trademarkName }}<i @click="removeTradmark">x</i>
             </li>
 
-            <li class="with-x" v-for="(prop, index) in options.props" :key="prop">
+            <li
+              class="with-x"
+              v-for="(prop, index) in options.props"
+              :key="prop"
+            >
               {{ prop }}<i @click="removeProp(index)">x</i>
             </li>
           </ul>
@@ -37,11 +41,26 @@
           <div class="sui-navbar">
             <div class="navbar-inner filter">
               <ul class="sui-nav">
-                <li class="active">
-                  <a href="#">综合</a>
+                <li :class="{ active: orderArr[0] === '1' }" @click="setOrder('1')">
+                  <a href="javascript: ;">
+                    综合
+                    <i
+                      class="iconfont"
+                      :class="arrow"
+                      v-if="orderArr[0] === '1'"
+                    ></i>
+                  </a>
                 </li>
-                <li>
-                  <a href="#">销量</a>
+
+                <li :class="{ active: orderArr[0] === '3' }" @click="setOrder('3')">
+                  <a href="javascript: ;">
+                    销量
+                    <i
+                      class="iconfont"
+                      :class="arrow"
+                      v-if="orderArr[0] === '3'"
+                    ></i>
+                  </a>
                 </li>
                 <li>
                   <a href="#">新品</a>
@@ -49,11 +68,15 @@
                 <li>
                   <a href="#">评价</a>
                 </li>
-                <li>
-                  <a href="#">价格⬆</a>
-                </li>
-                <li>
-                  <a href="#">价格⬇</a>
+               <li :class="{ active: orderArr[0] === '2' }" @click="setOrder('2')">
+                  <a href="javascript: ;">
+                    销量
+                    <i
+                      class="iconfont"
+                      :class="arrow"
+                      v-if="orderArr[0] === '2'"
+                    ></i>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -238,7 +261,7 @@ export default {
         // 品牌：id:名牌名称
         trademark: "",
         // 排序方式   1:综合； 2：价格asc；升序， desc：降序
-        order: "",
+        order: "3:desc",
         pageNo: 1,
         pageSize: 10,
       },
@@ -332,9 +355,27 @@ export default {
       this.getShopList();
     },
 
-    removeProp(index){
+    removeProp(index) {
       // 删除props中的元素
-      this.options.props.splice(index, 1)
+      this.options.props.splice(index, 1);
+      this.getShopList();
+    },
+
+    // 排序
+    setOrder(orderFlag){
+      // 获取当前的排序
+      let [flag, type] = this.orderArr
+      // 点击时，如果就是当前项，直接切换orderType
+      if(orderFlag === flag){
+        type = type === 'desc' ? 'asc' : 'desc'
+      }else {
+        // 电机的不是当前项，更新orderFlag为指定的值，ordeType跟新为desc
+        flag = orderFlag
+        type = 'desc'
+      }
+
+      // 更新列表
+      this.options.order = flag + ':' + type
       this.getShopList()
     }
   },
@@ -348,6 +389,17 @@ export default {
 
     trademarkName() {
       return this.options.trademark.split(":")[1];
+    },
+
+    arrow() {
+      return this.orderArr[1] === "desc"
+        ? "icon-xiajiantou"
+        : "icon-shangjiantou";
+    },
+
+    // 得到包含当前分类项排序方式的数组
+    orderArr() {
+      return this.options.order.split(":");
     },
   },
 
