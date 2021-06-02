@@ -86,7 +86,7 @@
               <li class="yui3-u-1-5" v-for="item in goodsList" :key="item.id">
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="javascrip:;"><img :src="item.defaultImg" /></a>
+                    <a href="javascript:;"><img :src="item.defaultImg" /></a>
                   </div>
                   <div class="price">
                     <strong>
@@ -308,10 +308,14 @@ export default {
 
     // 删除分类条件
     removeCategory() {
-      this.options.catId1 = "";
-      this.options.catId2 = "";
-      this.options.catId3 = "";
-      this.options.catName = "";
+      // this.options.catId1 = "";
+      this.$delete(this.options, catName)
+      this.$delete(this.options, catId1)
+      this.$delete(this.options, catId2)
+      this.$delete(this.options, catId3)
+      // this.options.catId2 = "";
+      // this.options.catId3 = "";
+      // this.options.catName = "";
       // this.getShopList()
 
       // 删除对应标签只是置空了当前数据，地址栏中还是存在参数，所以删除了哪个标签，就跳回search，不带上该类型参数
@@ -322,7 +326,8 @@ export default {
     },
     // 删除关键字
     removeKeyword() {
-      this.options.keywords = "";
+      // this.options.keywords = "";
+      this.$delete(this.options, 'keywords')
       // this.getShopList()
 
       this.$router.replace({
@@ -332,7 +337,8 @@ export default {
     },
     // 删除品牌条件
     removeTradmark() {
-      this.options.trademark = "";
+      // this.options.trademark = "";
+      this.$delete(this.options, 'trademark')
       this.getShopList();
     },
 

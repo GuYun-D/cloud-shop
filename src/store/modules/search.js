@@ -51,7 +51,7 @@ const actions = {
     searchParams = {...searchParams}
 
     Object.keys(searchParams).forEach(key => {
-      if (searchParams[key] === '' || (Array.isArray(searchParams[key]) && searchParams.length === 0)) {
+      if (searchParams[key] === '' || (Array.isArray(searchParams[key]) && searchParams[key].length === 0)) {
         delete searchParams[key]
       }
     });
