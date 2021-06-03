@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import store from './store'
 import "swiper/css/swiper.css";
+import Pageination from './components/Pageination'
 
 /**
  * mockjs不需要暴漏函数，直接打包就可以通过ajax访问
@@ -13,6 +14,7 @@ import router from './router/index'
 
 import TypeNav from "./components/TypeNav"
 Vue.component(TypeNav.name, TypeNav)
+Vue.component(Pageination.name, Pageination)
 
 Vue.config.productionTip = false
 
