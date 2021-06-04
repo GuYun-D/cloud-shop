@@ -280,7 +280,9 @@ export default {
     },
 
     // 发送搜索请求
-    getShopList() {
+    getShopList(page = 1) {
+      // 更新options中的page
+      this.options.page = page
       this.$store.dispatch("getProductList", this.options);
     },
 
@@ -365,8 +367,7 @@ export default {
 
     // currentChange 
     currentChange(page){
-      this.options.pageNo = page
-      this.getShopList()
+      this.getShopList(page)
     }
   },
 

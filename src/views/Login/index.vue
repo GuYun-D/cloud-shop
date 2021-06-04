@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Pageination></Pageination>
+    <Pageination :total="50" :currentPage="1" :pageSize="4" @currentChange="currentChange"></Pageination>
   </div>
 </template>
 
@@ -11,6 +11,11 @@ export default {
   components: {
     Pageination,
   },
+  methods: {
+    currentChange(channge){
+      console.log(channge);
+    }
+  }
 };
 </script>
 
