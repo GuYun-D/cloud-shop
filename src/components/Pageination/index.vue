@@ -11,8 +11,7 @@
 
     <!-- 连续页码 -->
     <button
-      v-for="item in startEnd.end"
-      v-if="item >= startEnd.start"
+      v-for="item in startEndArr"
       :key="item"
       @click="changeCurrentPage(item)"
       :class="{ active: mcPage === item }"
@@ -152,6 +151,16 @@ export default {
       }
 
       return { start, end };
+    },
+
+    startEndArr() {
+      const arr = [];
+      const { start, end } = this.startEnd;
+      for (let page = start; page <= end; page++) {
+        arr.push(page);
+      }
+
+      return arr;
     },
   },
 
