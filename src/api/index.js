@@ -47,3 +47,11 @@ export function reqFloors() {
 export function reqSearch(searchParams){
   return ajax.post('http://localhost:8080/mock/search', searchParams)
 }
+
+/**
+ * 商品详情页
+ */
+
+export function reqGoodsDeatil(searchParams){
+  return ajax.post('http://localhost:8080/mock/search', searchParams)
+}
