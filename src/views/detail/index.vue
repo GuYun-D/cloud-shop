@@ -7,27 +7,27 @@
     <section class="con">
       <!-- 导航路径区域 -->
       <div class="conPoin">
-        <span>{{categoryView.category1Name}}</span>
-        <span>{{categoryView.category2Name}}</span>
-        <span>{{categoryView.category3Name}}</span>
+        <span>{{ categoryView.category1Name }}</span>
+        <span>{{ categoryView.category2Name }}</span>
+        <span>{{ categoryView.category3Name }}</span>
       </div>
       <!-- 主要内容区域 -->
       <div class="mainCon">
         <!-- 左侧放大镜区域 -->
         <div class="previewWrap">
           <!--放大镜效果-->
-          <Zoom />
+          <Zoom :imageList="imageList"></Zoom>
           <!-- 小图列表 -->
-          <ImageList />
+          <ImageList :imageList="imageList"></ImageList>
         </div>
         <!-- 右侧选择区域布局 -->
         <div class="InfoWrap">
           <div class="goodsDetail">
             <h3 class="InfoName">
-              {{skuInfo.skuName}}
+              {{ skuInfo.skuName }}
             </h3>
             <p class="news">
-              {{skuInfo.skuDesc}}
+              {{ skuInfo.skuDesc }}
             </p>
             <div class="priceArea">
               <div class="priceArea1">
@@ -36,7 +36,7 @@
                 </div>
                 <div class="price">
                   <i>¥</i>
-                  <em>{{skuInfo.price}}</em>
+                  <em>{{ skuInfo.price }}</em>
                   <span>降价通知</span>
                 </div>
                 <div class="remark">
@@ -76,8 +76,16 @@
             <div class="chooseArea">
               <div class="choosed"></div>
               <dl v-for="spu in spuSaleAttrList" :key="spu.id">
-                <dt class="title">{{spu.saleAttrName}}</dt>
-                <dd changepirce="0" class="active" v-for="value  in spu.spuSaleAttrValueList" :key="value.id">{{value.saleAttrValueName}}</dd>
+                <dt class="title">{{ spu.saleAttrName }}</dt>
+                <dd
+                  changepirce="0"
+                  :class="{active: value.isChecked === '1'}"
+                  v-for="value in spu.spuSaleAttrValueList"
+                  :key="value.id"
+                  @click="changeCheck(value, spu.spuSaleAttrValueList)"
+                >
+                  {{ value.saleAttrValueName }}
+                </dd>
               </dl>
             </div>
             <div class="cartWrap">
@@ -328,7 +336,7 @@
 <script>
 import ImageList from "./ImageList/ImageList";
 import Zoom from "./Zoom/Zoom";
-import {mapGetters} from 'vuex'
+import { mapGetters } from "vuex";
 
 export default {
   name: "Detail",
@@ -344,9 +352,8 @@ export default {
     };
   },
 
-
-  beforeMount(){
-    this.skuId = this.$route.params.skuId
+  beforeMount() {
+    this.skuId = this.$route.params.skuId;
   },
 
   mounted() {
@@ -357,11 +364,23 @@ export default {
     getSkuDetailInfo() {
       this.$store.dispatch("getSkuDetailInfo", this.skuId);
     },
+
+    // 排他销售属性
+    changeCheck(value, allSpuSalseAttrValue){
+      for(let i = 0; i < allSpuSalseAttrValue.length; i++){
+        allSpuSalseAttrValue[i].isChecked = 0
+      }
+      value.isChecked = '1'
+    }
   },
 
   computed: {
-    ...mapGetters(['categoryView', 'skuInfo', 'spuSaleAttrList'])
-  }
+    ...mapGetters(["categoryView", "skuInfo", "spuSaleAttrList"]),
+
+    imageList() {
+      return this.skuInfo.skuImageList || [];
+    },
+  },
 };
 </script>
 
