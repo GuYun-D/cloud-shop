@@ -1,8 +1,8 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <div class="swiper-slide" v-for="image in imageList" :key="image.id">
-        <img :src="image.imgUrl" />
+      <div class="swiper-slide" v-for="(image, index) in imageList" :key="image.id">
+        <img :src="image.imgUrl" :class="{active: index === defaultIndex}" @click="changeDefaultIndex(index)" />
       </div>
     </div>
     <div class="swiper-button-next"></div>
@@ -15,6 +15,19 @@ import Swiper from "swiper";
 export default {
   name: "ImageList",
   props: ["imageList"],
+  data(){
+    return {
+      // 鼠标移入对应下标图片后显示边框
+      defaultIndex: 0
+    }
+  },
+  methods: {
+    changeDefaultIndex(index){
+      this.defaultIndex = index
+
+      this.$bus.$emit('syncDefaultIndex', index)
+    }
+  }
 };
 </script>
 
@@ -43,10 +56,10 @@ export default {
         padding: 1px;
       }
 
-      &:hover {
-        border: 2px solid #f60;
-        padding: 1px;
-      }
+      // &:hover {
+      //   border: 2px solid #f60;
+      //   padding: 1px;
+      // }
     }
   }
 

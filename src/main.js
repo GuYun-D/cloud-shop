@@ -20,6 +20,10 @@ Vue.config.productionTip = false
 
 new Vue({
   render: h => h(App),
+  beforeCreate () {
+    // 将当前vm作为总线对象挂到Vue原型对象上
+    Vue.prototype.$bus = this
+  },
   router,
   /**
    * store对象的功能

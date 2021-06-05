@@ -22,6 +22,16 @@
       defaultImg(){
         return this.imageList[this.defaultIndex] || {}
       }
+    },
+
+    mounted(){
+      this.$bus.$on('syncDefaultIndex', this.syncDefaultIndex)
+    },
+
+    methods: {
+      syncDefaultIndex(index){
+        this.defaultIndex = index
+      }
     }
   }
 </script>
