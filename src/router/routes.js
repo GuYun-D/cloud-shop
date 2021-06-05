@@ -5,6 +5,7 @@ import Home from '@/views/Home'
 import Search from '@/views/Search'
 import Register from '@/views/Register'
 import Login from '@/views/Login'
+import Detail from '@/views/detail'
 
 export default
   [{
@@ -30,4 +31,7 @@ export default
     meta: {
       isHiddenFooter: true
     }
+  }, {
+    path: '/detail/:skuId',
+    component: Detail
   }]

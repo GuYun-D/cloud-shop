@@ -41,7 +41,10 @@
           <div class="sui-navbar">
             <div class="navbar-inner filter">
               <ul class="sui-nav">
-                <li :class="{ active: orderArr[0] === '1' }" @click="setOrder('1')">
+                <li
+                  :class="{ active: orderArr[0] === '1' }"
+                  @click="setOrder('1')"
+                >
                   <a href="javascript: ;">
                     综合
                     <i
@@ -52,7 +55,10 @@
                   </a>
                 </li>
 
-                <li :class="{ active: orderArr[0] === '3' }" @click="setOrder('3')">
+                <li
+                  :class="{ active: orderArr[0] === '3' }"
+                  @click="setOrder('3')"
+                >
                   <a href="javascript: ;">
                     销量
                     <i
@@ -68,7 +74,10 @@
                 <li>
                   <a href="#">评价</a>
                 </li>
-               <li :class="{ active: orderArr[0] === '2' }" @click="setOrder('2')">
+                <li
+                  :class="{ active: orderArr[0] === '2' }"
+                  @click="setOrder('2')"
+                >
                   <a href="javascript: ;">
                     销量
                     <i
@@ -86,7 +95,9 @@
               <li class="yui3-u-1-5" v-for="item in goodsList" :key="item.id">
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="javascript:;"><img :src="item.defaultImg" /></a>
+                    <router-link :to="'/detail/' + item.id">
+                      <img :src="item.defaultImg" />
+                    </router-link>
                   </div>
                   <div class="price">
                     <strong>
@@ -95,7 +106,9 @@
                     </strong>
                   </div>
                   <div class="attr">
-                    <a href="javascrip:;">{{ item.title }}</a>
+                    <router-link :to="'/detail' + item.id">
+                      {{ item.title }}
+                    </router-link>
                   </div>
                   <div class="commit">
                     <i class="command"
@@ -118,13 +131,13 @@
               </li>
             </ul>
           </div>
-         <Pagination
-          :currentPage="options.pageNo"
-          :total="total"
-          :pageSize="options.pageSize"
-          :showPageNo="3"
-          @currentChange="currentChange"
-         ></Pagination>
+          <Pagination
+            :currentPage="options.pageNo"
+            :total="total"
+            :pageSize="options.pageSize"
+            :showPageNo="3"
+            @currentChange="currentChange"
+          ></Pagination>
         </div>
         <!--hotsale-->
         <div class="clearfix hot-sale">
@@ -282,17 +295,17 @@ export default {
     // 发送搜索请求
     getShopList(page = 1) {
       // 更新options中的page
-      this.options.page = page
+      this.options.page = page;
       this.$store.dispatch("getProductList", this.options);
     },
 
     // 删除分类条件
     removeCategory() {
       // this.options.catId1 = "";
-      this.$delete(this.options, catName)
-      this.$delete(this.options, catId1)
-      this.$delete(this.options, catId2)
-      this.$delete(this.options, catId3)
+      this.$delete(this.options, catName);
+      this.$delete(this.options, catId1);
+      this.$delete(this.options, catId2);
+      this.$delete(this.options, catId3);
       // this.options.catId2 = "";
       // this.options.catId3 = "";
       // this.options.catName = "";
@@ -307,7 +320,7 @@ export default {
     // 删除关键字
     removeKeyword() {
       // this.options.keywords = "";
-      this.$delete(this.options, 'keywords')
+      this.$delete(this.options, "keywords");
       // this.getShopList()
 
       this.$router.replace({
@@ -318,7 +331,7 @@ export default {
     // 删除品牌条件
     removeTradmark() {
       // this.options.trademark = "";
-      this.$delete(this.options, 'trademark')
+      this.$delete(this.options, "trademark");
       this.getShopList();
     },
 
@@ -348,27 +361,27 @@ export default {
     },
 
     // 排序
-    setOrder(orderFlag){
+    setOrder(orderFlag) {
       // 获取当前的排序
-      let [flag, type] = this.orderArr
+      let [flag, type] = this.orderArr;
       // 点击时，如果就是当前项，直接切换orderType
-      if(orderFlag === flag){
-        type = type === 'desc' ? 'asc' : 'desc'
-      }else {
+      if (orderFlag === flag) {
+        type = type === "desc" ? "asc" : "desc";
+      } else {
         // 电机的不是当前项，更新orderFlag为指定的值，ordeType跟新为desc
-        flag = orderFlag
-        type = 'desc'
+        flag = orderFlag;
+        type = "desc";
       }
 
       // 更新列表
-      this.options.order = flag + ':' + type
-      this.getShopList()
+      this.options.order = flag + ":" + type;
+      this.getShopList();
     },
 
-    // currentChange 
-    currentChange(page){
-      this.getShopList(page)
-    }
+    // currentChange
+    currentChange(page) {
+      this.getShopList(page);
+    },
   },
 
   computed: {
