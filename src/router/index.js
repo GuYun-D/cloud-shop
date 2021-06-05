@@ -58,5 +58,8 @@ Vue.use(VueRouter)
 // 暴漏对象
 export default new VueRouter({
   mode: 'history',
-  routes
+  routes,
+  scrollBehavior (to, from, savedPosition) {
+    return { x: 0, y: 0 }
+  }
 })
