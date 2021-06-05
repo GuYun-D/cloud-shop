@@ -52,6 +52,6 @@ export function reqSearch(searchParams){
  * 商品详情页
  */
 
-export function reqGoodsDeatil(searchParams){
-  return ajax.post('http://localhost:8080/mock/search', searchParams)
+export function reqGoodsDeatil(){
+  return ajax.get('http://localhost:8080/mock/detail')
 }

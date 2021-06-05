@@ -360,11 +360,12 @@ export default {
 
   data() {
     return {
-      skuId: "",
+      skuId: 0,
     };
   },
 
-  beforeCreate(){
+
+  beforeMount(){
     this.skuId = this.$route.params.skuId
   },
 
