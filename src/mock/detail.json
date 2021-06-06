@@ -160,6 +160,48 @@
           "imgUrl": "/images/91587f2ddb955545.jpg",
           "spuImgId": 2,
           "isDefault": "0"
+        },{
+          "id": 9,
+          "skuId": 2,
+          "imgName": "63e862164165f483.jpg",
+          "imgUrl": "/images/9a28034971309f0d.jpg",
+          "spuImgId": 2,
+          "isDefault": "0"
+        }, {
+          "id": 10,
+          "skuId": 2,
+          "imgName": "63e862164165f483.jpg",
+          "imgUrl": "/images/16bbd8b83bd11b9e.jpg",
+          "spuImgId": 2,
+          "isDefault": "0"
+        }, {
+          "id": 11,
+          "skuId": 2,
+          "imgName": "91587f2ddb955545.jpg",
+          "imgUrl": "/images/91587f2ddb955545.jpg",
+          "spuImgId": 2,
+          "isDefault": "0"
+        },{
+          "id": 12,
+          "skuId": 2,
+          "imgName": "63e862164165f483.jpg",
+          "imgUrl": "/images/9a28034971309f0d.jpg",
+          "spuImgId": 2,
+          "isDefault": "0"
+        }, {
+          "id": 13,
+          "skuId": 2,
+          "imgName": "63e862164165f483.jpg",
+          "imgUrl": "/images/16bbd8b83bd11b9e.jpg",
+          "spuImgId": 2,
+          "isDefault": "0"
+        }, {
+          "id": 14,
+          "skuId": 2,
+          "imgName": "91587f2ddb955545.jpg",
+          "imgUrl": "/images/91587f2ddb955545.jpg",
+          "spuImgId": 2,
+          "isDefault": "0"
         }
       ],
       "skuAttrValueList": [

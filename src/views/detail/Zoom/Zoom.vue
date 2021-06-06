@@ -32,7 +32,9 @@
       syncDefaultIndex(index){
         this.defaultIndex = index
       }
-    }
+    },
+
+    
   }
 </script>
 

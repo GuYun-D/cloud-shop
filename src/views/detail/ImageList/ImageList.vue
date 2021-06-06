@@ -1,33 +1,77 @@
 <template>
   <div class="swiper-container">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide" v-for="(image, index) in imageList" :key="image.id">
-        <img :src="image.imgUrl" :class="{active: index === defaultIndex}" @click="changeDefaultIndex(index)" />
+    <div class="swiper-wrapper" :style="imageLeft" ref="swiperWiper">
+      <div
+        class="swiper-slide"
+        v-for="(image, index) in imageList"
+        :key="image.id"
+      >
+        <img
+          :src="image.imgUrl"
+          :class="{ active: index === defaultIndex }"
+          @click="changeDefaultIndex(index)"
+        />
       </div>
     </div>
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next" @click="changeSwiper('next')"></div>
+    <div class="swiper-button-prev" @click="changeSwiper('prev')"></div>
   </div>
 </template>
 
 <script>
-import Swiper from "swiper";
 export default {
   name: "ImageList",
   props: ["imageList"],
-  data(){
+  data() {
     return {
       // 鼠标移入对应下标图片后显示边框
-      defaultIndex: 0
-    }
+      defaultIndex: 0,
+      imgLeft: 0,
+      nextFlag: true,
+      prevFlag: true,
+    };
   },
   methods: {
-    changeDefaultIndex(index){
-      this.defaultIndex = index
+    changeDefaultIndex(index) {
+      this.defaultIndex = index;
+      this.$bus.$emit("syncDefaultIndex", index);
+    },
 
-      this.$bus.$emit('syncDefaultIndex', index)
-    }
-  }
+    changeSwiper(value) {
+      if (value === "next" && this.nextFlag) {
+        this.nextFlag = false;
+        if (this.defaultIndex === this.$refs.swiperWiper.children.length - 1) {
+          this.defaultIndex = 8;
+          return;
+        }
+        if (
+          this.defaultIndex >= 6 &&
+          this.defaultIndex < this.$refs.swiperWiper.children.length - 1
+        ) {
+          this.imgLeft -= 56;
+        }
+        this.$bus.$emit("syncDefaultIndex", ++this.defaultIndex);
+      } else if (value === "prev" && this.prevFlag) {
+        this.prevFlag = false;
+        if (this.defaultIndex === 0) {
+          return (this.defaultIndex = 0);
+        }
+        if (this.defaultIndex >= 7) {
+          this.imgLeft += 56;
+        }
+        this.$bus.$emit("syncDefaultIndex", --this.defaultIndex);
+      }
+
+      this.nextFlag = true;
+      this.prevFlag = true;
+    },
+  },
+
+  computed: {
+    imageLeft() {
+      return { left: this.imgLeft + "px" };
+    },
+  },
 };
 </script>
 
