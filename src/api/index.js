@@ -44,7 +44,7 @@ export function reqFloors() {
  * 搜索分页
  */
 
-export function reqSearch(searchParams){
+export function reqSearch(searchParams) {
   return ajax.post('http://localhost:8080/mock/search', searchParams)
 }
 
@@ -52,6 +52,18 @@ export function reqSearch(searchParams){
  * 商品详情页
  */
 
-export function reqGoodsDeatil(){
+export function reqGoodsDeatil() {
   return ajax.get('http://localhost:8080/mock/detail')
+}
+
+/**
+ * 更新购物车
+ */
+export const reqAddOrderDataCart = (skuId, skuNum) => {
+  const shoppingCart = JSON.parse(localStorage.getItem('SHOPPINGCART')) || []
+  shoppingCart.push({
+    skuId,
+    skuNum
+  })
+  return {code: 200, message: '成功'}
 }

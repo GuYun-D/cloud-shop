@@ -6,6 +6,7 @@ import Search from '@/views/Search'
 import Register from '@/views/Register'
 import Login from '@/views/Login'
 import Detail from '@/views/detail'
+import AddCartSuccess from '@/views/ShopCart'
 
 export default
   [{
@@ -34,4 +35,7 @@ export default
   }, {
     path: '/detail/:skuId',
     component: Detail
+  }, {
+    path: '/addCartSuccess',
+    component: AddCartSuccess
   }]
