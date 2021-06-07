@@ -131,12 +131,13 @@
       "id": 2,
       "spuId": 1,
       "price": 5499,
-      "skuName": "Apple iPhone 11 (A2223) 64GB 红色 移动联通电信双卡双待",
+      "skuName": "Apple iPhone 11 (A2223) 64G 移动联通电信双卡双待",
+      "skuColor": "红色",
       "skuDesc": "主体\n入网型号\nA2223\n品牌\n机身厚度（mm）\n8.3\n运营商标志或内容\n无",
       "weight": "0.47",
       "tmId": 1,
       "category3Id": 61,
-      "skuDefaultImg": "http://192.168.200.128:8080/xxxx.jpg",
+      "skuDefaultImg": "/images/9a28034971309f0d.jpg",
       "isSale": 1,
       "skuImageList": [
         {
