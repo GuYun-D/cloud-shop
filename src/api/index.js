@@ -60,13 +60,24 @@ export function reqGoodsDeatil() {
  * 更新购物车
  */
 export const reqAddOrderDataCart = (skuId, skuNum) => {
+  let exist = false
   const shoppingCart = JSON.parse(localStorage.getItem('SHOPPINGCART')) || []
-  shoppingCart.push({
-    skuId,
-    skuNum
-  })
+  shoppingCart.forEach(item => {
+    if (item.skuId == skuId) {
+      item.skuNum = skuNum
+      exist = true
+    }
+  });
+
+  if (!exist) {
+    shoppingCart.push({
+      skuId,
+      skuNum
+    })
+  }
+
   localStorage.setItem('SHOPPINGCART', JSON.stringify(shoppingCart))
-  return {code: 200, message: '成功'}
+  return { code: 200, message: '成功' }
 }
 
 /**
@@ -74,7 +85,7 @@ export const reqAddOrderDataCart = (skuId, skuNum) => {
  */
 export const reqShopCartList = () => {
   return ajax({
-    url:'http://localhost:8080/mock/search',
+    url: 'http://localhost:8080/mock/search',
     method: 'post'
   })
 }

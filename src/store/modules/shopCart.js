@@ -28,10 +28,12 @@ export default {
       const shop = JSON.parse(localStorage.getItem('SHOPPINGCART')) || [];
       const shopList = result.data.data.goodsList;
       const shopArr = [];
+
       for(let i = 0; i < shop.length; i++){
         for(let j = 0; j < shopList.length; j++){
           if(shopList[j].id == shop[i].skuId){
-            shopArr.push(shopList[j])
+            shopList[j].skuNum = shop[i].skuNum
+            shopArr.unshift(shopList[j])
           }
         }
       }

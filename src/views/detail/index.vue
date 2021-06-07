@@ -365,11 +365,9 @@ export default {
 
   beforeMount() {
     this.skuId = this.$route.params.skuId;
-    const shopCart = JSON.parse(localStorage.getItem("SHOPPINGCART")) || [];
+    const shopCart = JSON.parse(localStorage.getItem("SHOPPINGCART"));
 
-    if (shopCart.length != 0) {
-
-    } else {
+    if (!shopCart) {
       localStorage.setItem("SHOPPINGCART", JSON.stringify([]));
     }
   },
