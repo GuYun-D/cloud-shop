@@ -65,5 +65,16 @@ export const reqAddOrderDataCart = (skuId, skuNum) => {
     skuId,
     skuNum
   })
+  localStorage.setItem('SHOPPINGCART', JSON.stringify(shoppingCart))
   return {code: 200, message: '成功'}
+}
+
+/**
+ * 获取购物车信息
+ */
+export const reqShopCartList = () => {
+  return ajax({
+    url:'http://localhost:8080/mock/search',
+    method: 'post'
+  })
 }

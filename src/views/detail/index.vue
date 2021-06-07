@@ -365,6 +365,13 @@ export default {
 
   beforeMount() {
     this.skuId = this.$route.params.skuId;
+    const shopCart = JSON.parse(localStorage.getItem("SHOPPINGCART")) || [];
+
+    if (shopCart.length != 0) {
+
+    } else {
+      localStorage.setItem("SHOPPINGCART", JSON.stringify([]));
+    }
   },
 
   mounted() {
@@ -393,8 +400,8 @@ export default {
           skuNum,
         });
         alert("购物车添加成功");
-        sessionStorage.setItem('SKUINFO_KEY', JSON.stringify(this.skuInfo))
-        this.$router.push(`/addCartSuccess?skuNum=${this.skuNum}`, )
+        sessionStorage.setItem("SKUINFO_KEY", JSON.stringify(this.skuInfo));
+        this.$router.push(`/addCartSuccess?skuNum=${this.skuNum}`);
       } catch (error) {
         alert(error.message);
       }

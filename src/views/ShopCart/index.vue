@@ -19,11 +19,8 @@
             <img src="./images/goods1.png">
             <div class="item-msg">米家（MIJIA） 小米小白智能摄像机增强版 1080p高清360度全景拍摄AI增强</div>
           </li>
-          <li class="cart-list-con3">
-            <div class="item-txt">语音升级款</div>
-          </li>
           <li class="cart-list-con4">
-            <span class="price">399.00</span>
+            <div class="price">399.00</div>
           </li>
           <li class="cart-list-con5">
             <a href="javascript:void(0)" class="mins">-</a>
@@ -48,11 +45,8 @@
             <img src="./images/goods2.png">
             <div class="item-msg">华为（MIJIA） 华为metaPRO 30 浴霸4摄像 超清晰</div>
           </li>
-          <li class="cart-list-con3">
-            <div class="item-txt">黑色版本</div>
-          </li>
           <li class="cart-list-con4">
-            <span class="price">5622.00</span>
+            <div class="price">5622.00</div>
           </li>
           <li class="cart-list-con5">
             <a href="javascript:void(0)" class="mins">-</a>
@@ -77,11 +71,8 @@
             <img src="./images/goods3.png">
             <div class="item-msg">iphone 11 max PRO 苹果四摄 超清晰 超费电 超及好用</div>
           </li>
-          <li class="cart-list-con3">
-            <div class="item-txt">墨绿色</div>
-          </li>
           <li class="cart-list-con4">
-            <span class="price">11399.00</span>
+            <div class="price">11399.00</div>
           </li>
           <li class="cart-list-con5">
             <a href="javascript:void(0)" class="mins">-</a>
@@ -127,6 +118,16 @@
 <script>
   export default {
     name: 'ShopCart',
+
+    mounted(){
+      this.getShopCart()
+    },
+
+    methods: {
+      getShopCart(){
+        this.$store.dispatch('getCartList')
+      }
+    }
   }
 </script>
 
@@ -153,7 +154,7 @@
         }
 
         .cart-th1 {
-          width: 25%;
+          width: 15%;
 
           input {
             vertical-align: middle;
@@ -165,7 +166,7 @@
         }
 
         .cart-th2 {
-          width: 25%;
+          width: 23%;
         }
 
         .cart-th3,
@@ -175,6 +176,8 @@
           width: 12.5%;
 
         }
+
+
       }
 
       .cart-body {
@@ -195,7 +198,7 @@
           }
 
           .cart-list-con2 {
-            width: 25%;
+            width: 26%;
 
             img {
               width: 82px;
@@ -220,12 +223,14 @@
           }
 
           .cart-list-con4 {
-            width: 12.5%;
-
+            width: 17.5%;
+            div{
+              text-align: center;
+            }
           }
 
           .cart-list-con5 {
-            width: 12.5%;
+            width: 15.5%;
 
             .mins {
               border: 1px solid #ddd;
