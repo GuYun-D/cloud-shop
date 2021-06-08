@@ -14,8 +14,8 @@ export default {
 
   actions: {
     // 传递多个参数不能直接用逗号隔开，使用解构的方法
-    addOrderDataCart({ commit }, { skuId, skuNum }) {
-      const result = reqAddOrderDataCart(skuId, skuNum)
+    addOrderDataCart({ commit }, { skuId, skuNum, operation }) {
+      const result = reqAddOrderDataCart(skuId, skuNum, operation)
       if (result.code === 200) {
         return 'ok'
       } else {
@@ -29,9 +29,9 @@ export default {
       const shopList = result.data.data.goodsList;
       const shopArr = [];
 
-      for(let i = 0; i < shop.length; i++){
-        for(let j = 0; j < shopList.length; j++){
-          if(shopList[j].id == shop[i].skuId){
+      for (let i = 0; i < shop.length; i++) {
+        for (let j = 0; j < shopList.length; j++) {
+          if (shopList[j].id == shop[i].skuId) {
             shopList[j].skuNum = shop[i].skuNum
             shopArr.unshift(shopList[j])
           }

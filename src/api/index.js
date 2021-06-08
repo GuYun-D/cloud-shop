@@ -59,21 +59,50 @@ export function reqGoodsDeatil() {
 /**
  * 更新购物车
  */
-export const reqAddOrderDataCart = (skuId, skuNum) => {
+export const reqAddOrderDataCart = (skuId, skuNum, operation) => {
   let exist = false
   const shoppingCart = JSON.parse(localStorage.getItem('SHOPPINGCART')) || []
-  shoppingCart.forEach(item => {
-    if (item.skuId == skuId) {
-      item.skuNum = skuNum
-      exist = true
+  if (operation) {
+    let index = -1;
+    for (let i = 0; i < shoppingCart.length; i++) {
+      if (shoppingCart[i].skuId == skuId) {
+        index = i
+      }
     }
-  });
 
-  if (!exist) {
-    shoppingCart.push({
-      skuId,
-      skuNum
-    })
+    if (index != -1) {
+      switch (operation) {
+        case 1:
+          shoppingCart[index].skuNum++
+
+          break;
+        case -1:
+          shoppingCart[index].skuNum--
+          if(shoppingCart[index].skuNum <= 1){
+            shoppingCart[index].skuNum = 1
+          }
+          break
+        default:
+          shoppingCart[index].skuNum = operation
+          break;
+      }
+    }
+
+
+  } else {
+    shoppingCart.forEach(item => {
+      if (item.skuId == skuId) {
+        item.skuNum = skuNum
+        exist = true
+      }
+    });
+
+    if (!exist) {
+      shoppingCart.push({
+        skuId,
+        skuNum
+      })
+    }
   }
 
   localStorage.setItem('SHOPPINGCART', JSON.stringify(shoppingCart))
