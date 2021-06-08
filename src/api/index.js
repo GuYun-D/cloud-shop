@@ -78,7 +78,7 @@ export const reqAddOrderDataCart = (skuId, skuNum, operation) => {
           break;
         case -1:
           shoppingCart[index].skuNum--
-          if(shoppingCart[index].skuNum <= 1){
+          if (shoppingCart[index].skuNum <= 1) {
             shoppingCart[index].skuNum = 1
           }
           break
@@ -100,7 +100,8 @@ export const reqAddOrderDataCart = (skuId, skuNum, operation) => {
     if (!exist) {
       shoppingCart.push({
         skuId,
-        skuNum
+        skuNum,
+        isChecked: 1
       })
     }
   }
@@ -117,4 +118,38 @@ export const reqShopCartList = () => {
     url: 'http://localhost:8080/mock/search',
     method: 'post'
   })
+}
+
+/**
+ * 修改购物车的选中状态
+ */
+export const reqUpdateCartChecked = (skuId, isChecked) => {
+  const shoppingCart = JSON.parse(localStorage.getItem('SHOPPINGCART')) || []
+  let skuIndex = -1
+  shoppingCart.forEach((item, index) => {
+    if (item.skuId == skuId) {
+      skuIndex = index
+    }
+  });
+  if (skuIndex != -1) {
+    shoppingCart[skuIndex].isChecked = isChecked
+  }
+
+  localStorage.setItem('SHOPPINGCART', JSON.stringify(shoppingCart))
+}
+
+/**
+ * 购物车全选
+ */
+export const reqUpdateCartCheckedAll = (isChecked) => {
+  const shoppingCart = JSON.parse(localStorage.getItem('SHOPPINGCART')) || []
+  shoppingCart.forEach(item => {
+    if(item.isChecked !== isChecked){
+      item.isChecked = isChecked
+    }
+  })
+
+  localStorage.setItem('SHOPPINGCART', JSON.stringify(shoppingCart))
+
+  return {code: 200, message: 'ok'}
 }

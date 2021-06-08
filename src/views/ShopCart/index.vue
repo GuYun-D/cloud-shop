@@ -17,6 +17,7 @@
               type="checkbox"
               name="chk_list"
               :checked="shop.isChecked == 1 ? true : false"
+              @click="updateOne(shop)"
             />
           </li>
           <li class="cart-list-con2">
@@ -41,7 +42,12 @@
               minnum="1"
               class="itxt"
               @change="
-                changeCartNum(shop.id, shop.skuNum, $event.target.value * 1, true)
+                changeCartNum(
+                  shop.id,
+                  shop.skuNum,
+                  $event.target.value * 1,
+                  true
+                )
               "
             />
             <a
@@ -105,12 +111,28 @@ export default {
       this.$store.dispatch("getCartList");
     },
 
+    // 修改商品数量
     changeCartNum(skuId, skuNum, operation, isOperation) {
-      if(isOperation === true){
-        operation = operation <= 1 ? '1' : operation
+      if (isOperation === true) {
+        operation = operation <= 1 ? "1" : operation;
       }
-      this.$store.dispatch("addOrderDataCart", {skuId, skuNum, operation});
-      this.getShopCart()
+      this.$store.dispatch("addOrderDataCart", { skuId, skuNum, operation });
+      this.getShopCart();
+    },
+
+    // 修改商品状态
+    updateOne(shop) {
+      if (shop.isChecked == 1) {
+        shop.isChecked = 0;
+      } else {
+        shop.isChecked = 1;
+      }
+      this.$store.dispatch("upDateCartChecked", {
+        skuId: shop.id,
+        isChecked: shop.isChecked,
+      });
+
+      this.getShopCart();
     },
   },
 
@@ -118,7 +140,7 @@ export default {
     ...mapState({
       shopList: (state) => state.shopCart.shopCartList,
     }),
-    
+
     checkedNum() {
       return this.shopList.reduce((prev, item) => {
         if (item.isChecked === 1) {
@@ -142,7 +164,16 @@ export default {
         return this.shopList.every((item) => item.isChecked === 1);
       },
 
-      set() {},
+      async set(val) {
+        const result = await this.$store.dispatch(
+          "updateCartCheckedAll",
+          val ? 1 : 0
+        );
+        if (result.code == 200) {
+          alert("修改成功");
+        }
+        this.getShopCart();
+      },
     },
   },
 };

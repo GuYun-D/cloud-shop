@@ -1,5 +1,4 @@
-import { reqAddOrderDataCart } from '@/api'
-import { reqShopCartList } from '@/api'
+import { reqAddOrderDataCart, reqShopCartList, reqUpdateCartChecked, reqUpdateCartCheckedAll } from '@/api'
 
 export default {
   state: {
@@ -32,6 +31,7 @@ export default {
       for (let i = 0; i < shop.length; i++) {
         for (let j = 0; j < shopList.length; j++) {
           if (shopList[j].id == shop[i].skuId) {
+            shopList[j].isChecked = shop[i].isChecked
             shopList[j].skuNum = shop[i].skuNum
             shopArr.unshift(shopList[j])
           }
@@ -39,6 +39,24 @@ export default {
       }
 
       commit('RECEIVE_SHOPCART_LIST', shopArr)
+    },
+
+    upDateCartChecked(context, { skuId, isChecked }) {
+      // console.log(isChecked);
+      reqUpdateCartChecked(skuId, isChecked)
+      const { shopCartList } = context.state
+      shopCartList.forEach(item => {
+        if (item.id == skuId) {
+          item.isChecked = isChecked
+        }
+      });
+
+      context.commit('RECEIVE_SHOPCART_LIST', shopCartList)
+    },
+
+    updateCartCheckedAll({ commit }, isChecked) {
+      const result = reqUpdateCartCheckedAll(isChecked)
+      return result
     }
   },
 

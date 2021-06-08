@@ -395,7 +395,7 @@ export default {
       try {
         const result = await this.$store.dispatch("addOrderDataCart", {
           skuId,
-          skuNum,
+          skuNum
         });
         alert("购物车添加成功");
         sessionStorage.setItem("SKUINFO_KEY", JSON.stringify(this.skuInfo));
