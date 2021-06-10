@@ -144,12 +144,27 @@ export const reqUpdateCartChecked = (skuId, isChecked) => {
 export const reqUpdateCartCheckedAll = (isChecked) => {
   const shoppingCart = JSON.parse(localStorage.getItem('SHOPPINGCART')) || []
   shoppingCart.forEach(item => {
-    if(item.isChecked !== isChecked){
+    if (item.isChecked !== isChecked) {
       item.isChecked = isChecked
     }
   })
 
   localStorage.setItem('SHOPPINGCART', JSON.stringify(shoppingCart))
 
-  return {code: 200, message: 'ok'}
+  return { code: 200, message: 'ok' }
+}
+
+/**
+ * 删除单个商品
+ */
+export const reqDeleteOne = (id) => {
+  const shoppingCart = JSON.parse(localStorage.getItem('SHOPPINGCART')) || []
+  shoppingCart.forEach((item, index) => {
+    // console.log(item.skuId == id);
+    if (item.skuId == id) {
+      shoppingCart.splice(index, 1)
+    }
+  })
+  localStorage.setItem('SHOPPINGCART', JSON.stringify(shoppingCart))
+  return { code: 200, message: "ok" }
 }

@@ -1,4 +1,4 @@
-import { reqAddOrderDataCart, reqShopCartList, reqUpdateCartChecked, reqUpdateCartCheckedAll } from '@/api'
+import { reqAddOrderDataCart, reqShopCartList, reqUpdateCartChecked, reqUpdateCartCheckedAll, reqDeleteOne } from '@/api'
 
 export default {
   state: {
@@ -22,9 +22,9 @@ export default {
       }
     },
 
-    async getCartList({ commit }) {
+    async getCartList({ commit, state, dispatch }) {
       const result = await reqShopCartList();
-      const shop = JSON.parse(localStorage.getItem('SHOPPINGCART')) || [];
+      const shop = JSON.parse(localStorage.getItem('SHOPPINGCART')) || []
       const shopList = result.data.data.goodsList;
       const shopArr = [];
 
@@ -57,6 +57,26 @@ export default {
     updateCartCheckedAll({ commit }, isChecked) {
       const result = reqUpdateCartCheckedAll(isChecked)
       return result
+    },
+
+    deleteOne({commit}, skuId){
+      const result = reqDeleteOne(skuId)
+      if(result.code === 200){
+        return 'ok'
+      }else {
+        return Promise.reject(new Error('false'))
+      }
+    },
+
+    deleteCartAll({commit, dispatch, state}){
+      let promises = []
+
+      state.shopCartList.forEach(item => {
+        if(!item.isChecked) return
+        let promise = dispatch('deleteOne', item.id)
+        promises.push(promise)
+      })
+      return Promise.all(promises)
     }
   },
 
