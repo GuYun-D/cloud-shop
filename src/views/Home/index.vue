@@ -33,7 +33,7 @@ export default {
 
   mounted(){
     this.$store.dispatch('getFloors')
-    localStorage.setItem('USER_INFO', JSON.stringify({}))
+    localStorage.getItem('USER_INFO') ? localStorage.getItem('USER_INFO') : localStorage.setItem('USER_INFO', JSON.stringify({}))
   },
 
   computed: {

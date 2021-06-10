@@ -1,6 +1,7 @@
 /**
  * 包含应用的所有接口的接口请求函数
  */
+import user from '@/store/modules/user.js'
 import ajax from './ajax.js'
 /**
  * 首页三级分类
@@ -179,4 +180,29 @@ export const reqserRegister = (info) => {
   console.log(userInfo);
   localStorage.setItem('USER_INFO', JSON.stringify(userInfo))
   return { code: 200, message: "注册成功" }
+}
+
+/**
+ * 用户登录
+ */
+
+import { getUserTempId } from '@/utils/userabout'
+export const reqUserLogin = (myUserInfo) => {
+  const userInfo = JSON.parse(localStorage.getItem('USER_INFO')) || {}
+  if (myUserInfo.phone === userInfo.phone && myUserInfo.password === userInfo.password) {
+    return {
+      code: 200,
+      message: '登陆成功',
+      data: {
+        token: getUserTempId()
+      },
+      ok: true
+    }
+  } else {
+    return {
+      code: 201,
+      data: null,
+      ok: false
+    }
+  }
 }
