@@ -168,3 +168,15 @@ export const reqDeleteOne = (id) => {
   localStorage.setItem('SHOPPINGCART', JSON.stringify(shoppingCart))
   return { code: 200, message: "ok" }
 }
+
+/**
+ * 用户注册
+ */
+export const reqserRegister = (info) => {
+  const userInfo = JSON.parse(localStorage.getItem('USER_INFO')) || {}
+  userInfo.phone = info.phone
+  userInfo.password = info.password
+  console.log(userInfo);
+  localStorage.setItem('USER_INFO', JSON.stringify(userInfo))
+  return { code: 200, message: "注册成功" }
+}
