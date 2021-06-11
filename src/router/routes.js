@@ -8,6 +8,7 @@ import Login from '@/views/Login'
 import Detail from '@/views/detail'
 import AddCartSuccess from '@/views/AddCartSuccess'
 import ShopCart from '@/views/ShopCart'
+import Trade from '@/views/Trade'
 
 export default
   [{
@@ -42,4 +43,7 @@ export default
   }, {
     path: '/shopCart',
     component: ShopCart
+  }, {
+    path: '/trade',
+    component: Trade
   }]
