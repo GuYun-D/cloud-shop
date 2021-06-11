@@ -29,9 +29,17 @@ function removeToken(){
   localStorage.removeItem(TOKEN_KEY)
 }
 
+function getUserInfo(userInfoTemp){
+  const userInfo = JSON.parse(localStorage.getItem('USER_INFO'))
+  if(userInfo){
+    userInfoTemp.name = userInfo.phone
+  }
+}
+
 export {
   getUserTempId,
   setToken,
   getToken,
-  removeToken
+  removeToken,
+  getUserInfo
 }

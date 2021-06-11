@@ -214,3 +214,15 @@ export const reqUserLogin = (myUserInfo) => {
 export const reqUerInfo = () => {
   return ajax.get('http://localhost:8080/mock/user')
 }
+
+/**
+ * 退出登录
+ */
+export const reqLogout = () => {
+  return {
+    code: 200,
+    data: null,
+    message: '成功',
+    ok: true
+  }
+}

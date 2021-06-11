@@ -5,7 +5,11 @@
       <div class="container">
         <div class="loginList">
           <p>云购物欢迎您！</p>
-          <p>
+          <p v-if="$store.state.user.userInfo.name">
+            <a href="javascript:;">{{$store.state.user.userInfo.name}}</a>
+            <a href="javascript:;"  class="register" @click="logout">退出登录</a>
+          </p>
+          <p v-else>
             <span>请</span>
             <router-link to="/login">登录</router-link>
             <router-link class="register" to="/register">免费注册</router-link>
@@ -58,6 +62,8 @@
 </template>
 
 <script>
+
+
 export default {
   name: "Header",
   data() {
@@ -87,6 +93,16 @@ export default {
 
       this.keywords = "";
     },
+
+    async logout(){
+      try {
+        await this.$store.dispatch('userLogout')
+        alert('退出成功')
+        this.$router.push('/')
+      } catch (error) {
+        alert(error.message)
+      }
+    }
   },
 };
 </script>
