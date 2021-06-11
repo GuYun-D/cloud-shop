@@ -38,7 +38,9 @@
                 </label>
                 <span class="forget">忘记密码？</span>
               </div>
-              <button class="btn" @click.prevent="login">登&nbsp;&nbsp;录</button>
+              <button class="btn" @click.prevent="login">
+                登&nbsp;&nbsp;录
+              </button>
             </form>
 
             <div class="call clearFix">
@@ -89,14 +91,16 @@ export default {
       let { phone, password } = this;
       if (password && phone) {
         try {
-        await this.$store.dispatch("userLogin", { phone, password });
-        alert('登陆成功')
-        this.$router.push('/')
+          await this.$store.dispatch("userLogin", { phone, password });
+          alert("登陆成功");
+          // 判断当前是否有redirect参数
+          let redirect = this.$route.query.redirect || "/";
+          this.$router.push(redirect);
         } catch (error) {
-          alert(error.message)
+          alert(error.message);
         }
-      }else {
-        alert("请输入注册电话号码或者密码")
+      } else {
+        alert("请输入注册电话号码或者密码");
       }
     },
   },

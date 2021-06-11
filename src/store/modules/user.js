@@ -3,17 +3,27 @@
  */
 
 import { getUserTempId, setToken, removeToken, getToken } from '@/utils/userabout'
-import {reqserRegister, reqUserLogin} from '@/api'
+import {reqserRegister, reqUserLogin, reqUerInfo} from '@/api'
 
 
 const state = {
   // 获取临时标识id
   userTempId: getUserTempId(),
-  token: getToken()
+  token: getToken(),
+  userInfo: {}
 }
 const mutations = {
   RECEIVE_TOKEN(state, token){
     state.token = token
+  },
+
+  RECEIVE_USERINFO(state, userInfo){
+    state.userInfo = userInfo
+  },
+
+  RESET_USERINFO(state){
+    state.userInfo = {}
+    state.token = ''
   }
 }
 const actions = {
@@ -33,10 +43,26 @@ const actions = {
     if(result.code === 200){
       commit('RECEIVE_TOKEN', result.data.token)
       setToken(result.data.token)
+      localStorage.setItem('TOKEN_CREATED_TIME', result.data.tokenCreatedTime)
       return 'ok'
     }else {
       return Promise.reject(new Error('failed'))
     }
+  },
+
+  async getUserInfo({commit}){
+    const result = await reqUerInfo()
+    if(result.code === 200){
+      commit('RECEIVE_USERINFO', result.data.data)
+      return 'ok'
+    }else {
+      return Promise.reject(new Error('failed'))
+    }
+  },
+
+  async resetUserInfo({commit}){
+    removeToken()
+    commit('RESET_USERINFO')
   }
 }
 const getters = {}

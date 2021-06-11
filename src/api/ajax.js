@@ -23,9 +23,16 @@ service.interceptors.request.use((config) => {
   // 显示进度条
   NProgress.start()
 
+  // 携带临时标识
   let userTempId = store.state.user.userTempId
   if(userTempId){
     config.headers.userTempId = userTempId
+  }
+
+  // 携带登陆后标识token
+  let token = store.state.user.token
+  if(token){
+    config.headers.token = token
   }
 
   // 必须返回config , 后面就会根据返回的config，使用xhr发送ajax请求

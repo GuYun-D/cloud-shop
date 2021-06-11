@@ -1,6 +1,7 @@
 /**
  * 路由模块
  */
+import store from '@/store'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
@@ -33,7 +34,7 @@ VueRouter.prototype.push = function push(location, onResolve, onReject) {
       // 产生失败的promise：抛出错误或者return一个失败的promise
       return err
     }
-    
+
     // 如果不是重复导航的错误，将错误向下传递
     return Promise.reject(err)
   })
@@ -56,10 +57,49 @@ VueRouter.prototype.replace = function (location, onResolve, onReject) {
 Vue.use(VueRouter)
 
 // 暴漏对象
-export default new VueRouter({
+const router = new VueRouter({
   mode: 'history',
   routes,
-  scrollBehavior (to, from, savedPosition) {
+  scrollBehavior(to, from, savedPosition) {
     return { x: 0, y: 0 }
   }
 })
+
+router.beforeEach(async (to, from, next) => {
+  // 全局前置导航守卫
+  let token = store.state.user.token
+
+  if (token) {
+    // 代表登陆了过或者之前登陆过
+    if (to.path === '/login') {
+      // 登陆过了又想去登录页，直接跳转到首页
+      next('/')
+    } else {
+      let hasUserInfo = !!store.state.user.userInfo.name
+      if (hasUserInfo) {
+        console.log(store.state.user.userInfo.name);
+        console.log("有token，放行");
+        next()
+      } else {
+        try {
+          await store.dispatch('getUserInfo')
+          console.log("获取到了用户信息");
+          console.log(store.state.user.userInfo.name);
+          next()
+        } catch (error) {
+          alert("token过期或者未知i错误")
+          store.dispatch('resetUserInfo')
+          next('/login?redirect=' + to.path)
+        }
+      }
+
+    }
+  } else {
+    // 没登陆过
+    // 判断用户是否去订单相关的页面
+    next()
+    console.log("没登陆过");
+  }
+})
+
+export default router

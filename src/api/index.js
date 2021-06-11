@@ -194,7 +194,8 @@ export const reqUserLogin = (myUserInfo) => {
       code: 200,
       message: '登陆成功',
       data: {
-        token: getUserTempId()
+        token: getUserTempId(),
+        tokenCreatedTime: Date.now()
       },
       ok: true
     }
@@ -205,4 +206,11 @@ export const reqUserLogin = (myUserInfo) => {
       ok: false
     }
   }
+}
+
+/**
+ * 根据token获取用户信息
+ */
+export const reqUerInfo = () => {
+  return ajax.get('http://localhost:8080/mock/user')
 }
