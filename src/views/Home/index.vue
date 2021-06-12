@@ -14,33 +14,37 @@
 <script>
 import ListContainer from "./ListContainer";
 import TodayRecommend from "./TodyRecommend";
-import Rank from "./Rank"
-import Like from "./Like"
-import Floor from "./Floor"
-import Brand from "./Brand"
-import {mapState} from 'vuex'
+import Rank from "./Rank";
+import Like from "./Like";
+import Floor from "./Floor";
+import Brand from "./Brand";
+import { mapState } from "vuex";
 
 export default {
-  components: { 
+  components: {
     TodayRecommend,
     ListContainer,
     Rank,
     Like,
     Floor,
-    Brand
+    Brand,
   },
   name: "Home",
 
-  mounted(){
-    this.$store.dispatch('getFloors')
-    localStorage.getItem('USER_INFO') ? localStorage.getItem('USER_INFO') : localStorage.setItem('USER_INFO', JSON.stringify({}))
+  mounted() {
+    localStorage.getItem("USER_INFO")
+      ? localStorage.getItem("USER_INFO")
+      : localStorage.setItem("USER_INFO", JSON.stringify({}));
+    localStorage.getItem("ADDRESS_SIOP")
+      ? localStorage.getItem("ADDRESS_SIOP")
+      : localStorage.setItem("ADDRESS_SIOP", JSON.stringify([]));
   },
 
   computed: {
     ...mapState({
-      floors: state => state.home.floors
-    })
-  }
+      floors: (state) => state.home.floors,
+    }),
+  },
 };
 </script>
 

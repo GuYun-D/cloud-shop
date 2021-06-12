@@ -9,6 +9,7 @@ import Detail from '@/views/detail'
 import AddCartSuccess from '@/views/AddCartSuccess'
 import ShopCart from '@/views/ShopCart'
 import Trade from '@/views/Trade'
+import AddAddress from '@/views/addAddress'
 
 export default
   [{
@@ -46,4 +47,7 @@ export default
   }, {
     path: '/trade',
     component: Trade
+  }, {
+    path: '/addAddress',
+    component: AddAddress
   }]

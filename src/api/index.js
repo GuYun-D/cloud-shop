@@ -226,3 +226,24 @@ export const reqLogout = () => {
     ok: true
   }
 }
+
+/**
+获取订单交易信息
+ */
+export const reqTradeInfo = () => {
+  return ajax.get('http://localhost:8080/mock/trade')
+}
+
+/**
+ * 添加收货地址
+ */
+export const reqAddAress = (addressInfo) => {
+  const addresses = JSON.parse(localStorage.getItem('ADDRESS_ShOP')) || []
+  addresses.push(addressInfo)
+  console.log(addresses);
+  localStorage.setItem('ADDRESS_ShOP', JSON.stringify(addresses))
+  return {
+    code: 200,
+    message: '添加成功'
+  }
+}
