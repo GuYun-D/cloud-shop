@@ -238,12 +238,23 @@ export const reqTradeInfo = () => {
  * 添加收货地址
  */
 export const reqAddAress = (addressInfo) => {
+
   const addresses = JSON.parse(localStorage.getItem('ADDRESS_ShOP')) || []
-  addresses.push(addressInfo)
-  console.log(addresses);
+  if(addressInfo.isDefault){
+    for(let i = 0; i < addresses.length; i++){
+      addresses[i].isDefault = false
+    }
+  }
+  addresses.unshift(addressInfo)
   localStorage.setItem('ADDRESS_ShOP', JSON.stringify(addresses))
   return {
     code: 200,
-    message: '添加成功'
+    message: '添加成功',
+    data: {
+      name: addressInfo.name,
+      phone: addressInfo.phone,
+      addreess: addressInfo.addreess,
+      isDefault: addressInfo.isDefault
+    }
   }
 }

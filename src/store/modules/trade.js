@@ -1,22 +1,25 @@
 import { reqTradeInfo, reqAddAress } from '@/api'
 
 const state = {
-  tradeInfo: {}
+  tradeInfo: {},
+  newAddress: {}
 }
 
 const actions = {
-  async tradeInfo({ commit }) {
+  async tradeInfo({ commit, state, dispatch }) {
     const result = await reqTradeInfo()
-    console.log(result.data.data.records[0]);
+    const addresses = JSON.parse(localStorage.getItem('ADDRESS_ShOP')) || []
+    result.data.data.records[0].deliveryAddress = addresses
     if (result.code === 200) {
-      commit('RECEIVE_TRADE_INFO', result.data.data.records)
+      // console.log(result.data.data.records[0].deliveryAddress[0]);
+      commit('RECEIVE_TRADE_INFO', result.data.data.records[0])
     }
   },
 
   async addAddress({commit}, info){
     const result = await reqAddAress(info)
-    console.log(result);
     if(result.code === 200){
+      commit('RECEIVE_NEW_ADDRESS', result.data)
       return "ok"
     }else {
       return Promise.reject(new Error('failed'))
@@ -27,6 +30,10 @@ const actions = {
 const mutations = {
   RECEIVE_TRADE_INFO(state, tradeInfo) {
     state.tradeInfo = tradeInfo
+  },
+
+  RECEIVE_NEW_ADDRESS(state, addressInfo){
+    state.newAddress = addressInfo
   }
 }
 

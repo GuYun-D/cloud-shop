@@ -124,3 +124,11 @@ html {
   user-select: none;
   /* CSS3属性 */
 }
+
+
+  
+.clearfix:after{
+  display:block;
+  clear:both;
+  content:"";
+}

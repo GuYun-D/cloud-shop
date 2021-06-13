@@ -3,36 +3,42 @@
     <h3 class="title">填写并核对订单信息</h3>
     <div class="content">
       <h5 class="receive">收件人信息</h5>
-      <div class="address clearFix">
-        <p>暂无收货地址信息，请添加</p>
+      <div class="address clearfix" v-if="deliveryAddress.length == 0">
+        <router-link to="/addAddress" class="addAddress"
+          >暂无收货地址信息，请点此添加</router-link
+        >
       </div>
-      <div class="address clearFix">
-        <span class="username selected">张三</span>
-        <p>
-          <span class="s1">北京市昌平区宏福科技园综合楼6层</span>
-          <span class="s2">15010658793</span>
-          <span class="s3">默认地址</span>
-        </p>
+
+      <div class="address clearfix" v-else>
+        <div>
+          <span class="username selected">{{ address.name }}</span>
+          <p>
+            <span class="s1">{{ address.address }}</span>
+            <span class="s2">{{ address.phone }}</span>
+            <span class="s3" v-if="address.isDefault">默认地址</span>
+            <span class="s3" v-show="!address.isDefault">设为默认</span>
+            <span class="s4" @click="chooseAddress">更换地址</span>
+          </p>
+        </div>
       </div>
-      <div class="address clearFix">
-        <span class="username selected">李四</span>
-        <p>
-          <span class="s1">北京市昌平区宏福科技园综合楼6层</span>
-          <span class="s2">13590909098</span>
-          <span class="s3">默认地址</span>
-        </p>
-      </div>
-      <div class="address clearFix">
-        <span class="username selected">王五</span>
-        <p>
-          <span class="s1">北京市昌平区宏福科技园综合楼6层</span>
-          <span class="s2">18012340987</span>
-          <span class="s3">默认地址</span>
-        </p>
+      <div id="addressList" v-show="addressList">
+        <ul>
+          <li
+            v-for="address in deliveryAddress"
+            :key="address.name"
+            v-if="address.isDefault == false"
+            @click="changeAddress(address)"
+          >
+            {{ address.name }}&nbsp;&nbsp;{{ address.address }}&nbsp;&nbsp;{{
+              address.phone
+            }}
+          </li>
+          <li><router-link to="/addAddress">新增收货地址</router-link></li>
+        </ul>
       </div>
       <div class="line"></div>
       <h5 class="pay">支付方式</h5>
-      <div class="address clearFix">
+      <div class="address clearfix">
         <span class="username selected">在线支付</span>
         <span class="username" style="margin-left: 5px">货到付款</span>
       </div>
@@ -40,14 +46,14 @@
       <h5 class="pay">送货清单</h5>
       <div class="way">
         <h5>配送方式</h5>
-        <div class="info clearFix">
+        <div class="info clearfix">
           <span class="s1">天天快递</span>
           <p>配送时间：预计8月10日（周三）09:00-15:00送达</p>
         </div>
       </div>
       <div class="detail">
         <h5>商品清单</h5>
-        <ul class="list clearFix">
+        <ul class="list clearfix">
           <li>
             <img src="./images/goods.png" alt="" />
           </li>
@@ -64,7 +70,7 @@
           <li>X1</li>
           <li>有货</li>
         </ul>
-        <ul class="list clearFix">
+        <ul class="list clearfix">
           <li>
             <img src="./images/goods.png" alt="" />
           </li>
@@ -96,7 +102,7 @@
         <h5>使用优惠/抵用</h5>
       </div>
     </div>
-    <div class="money clearFix">
+    <div class="money clearfix">
       <ul>
         <li>
           <b><i>1</i>件商品，总商品金额</b>
@@ -121,17 +127,23 @@
         <span>15010658793</span>
       </div>
     </div>
-    <div class="sub clearFix">
+    <div class="sub clearfix">
       <router-link class="subBtn" to="/pay">提交订单</router-link>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "Trade",
   data() {
-    return {};
+    return {
+      address: {},
+      addressList: false,
+      index: -1,
+    };
   },
 
   mounted() {
@@ -141,6 +153,34 @@ export default {
   methods: {
     getTradeInfo() {
       this.$store.dispatch("tradeInfo");
+    },
+
+    chooseAddress() {
+      this.addressList = true;
+    },
+
+    changeAddress(address) {
+      this.address = address;
+      this.addressList = false;
+    },
+  },
+
+  computed: {
+    ...mapGetters(["orderDetailList", "deliveryAddress"]),
+
+    defaultAddress() {
+      let index = -1;
+      for (let i = 0; i < this.deliveryAddress.length; i++) {
+        if (this.deliveryAddress[i].isDefault == true) {
+          index = i;
+        }
+      }
+
+      if (index === -1) {
+        return (this.address = this.deliveryAddress[0]);
+      } else {
+        return (this.address = this.deliveryAddress[index]);
+      }
     },
   },
 };
@@ -171,6 +211,17 @@ export default {
     .address {
       padding-left: 20px;
       margin-bottom: 15px;
+
+      .addAddress {
+        color: #f40;
+        font-size: 18px;
+        font-weight: bold;
+        transition: all 0.3s;
+
+        &:hover {
+          color: green;
+        }
+      }
 
       .username {
         float: left;
@@ -228,11 +279,43 @@ export default {
           color: #fff;
           margin-top: 3px;
           text-align: center;
+          border-radius: 2px;
+        }
+
+        .s4 {
+          float: left;
+          width: 56px;
+          height: 24px;
+          line-height: 24px;
+          margin-left: 10px;
+          background-color: skyblue;
+          color: #fff;
+          margin-top: 3px;
+          text-align: center;
+          border-radius: 2px;
         }
       }
 
       p:hover {
         background-color: #ddd;
+      }
+    }
+
+    #addressList {
+      width: 600px;
+      padding-left: 20px;
+
+      li {
+        width: 100%;
+        padding: 10px;
+        font: 16px;
+        font-weight: bold;
+        color: #111;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #ccc;
+        }
       }
     }
 

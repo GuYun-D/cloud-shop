@@ -13,7 +13,14 @@
         <span class="attr">收货人详细地址:</span>
         <input type="text" class="content" v-model="addressInfo.address" />
       </div>
-      <div class="input-item">
+      <div class="input-item clearfix">
+        <div class="isdefault">
+          <input id="default" type="checkbox" v-model="addressInfo.isDefault" @click="addressInfo.isDefault = !addressInfo.isDefault" />
+          <label for="default">
+            <span>将该地址设为默认地址</span>
+          </label>
+          
+        </div>
         <button @click.prevent="setAddress">确定</button>
       </div>
     </form>
@@ -29,27 +36,28 @@ export default {
         name: "",
         phone: "",
         address: "",
-      },
+         isDefault: false
+      }
     };
   },
 
   methods: {
-     setAddress() {
+    setAddress() {
       const { addressInfo } = this;
       if (
         addressInfo.name.trim() &&
         addressInfo.phone.trim() &&
-        addressInfo.address.trim
+        addressInfo.address.trim()
       ) {
         try {
           this.$store.dispatch("addAddress", addressInfo);
           alert("地址添加成功");
           this.$router.push("/trade");
         } catch (error) {
-          alert('添加失败')
+          alert("添加失败");
         }
-      }else {
-        alert("请输入完整收货地址")
+      } else {
+        alert("请输入完整收货地址");
       }
     },
   },
@@ -69,6 +77,16 @@ export default {
     .attr {
       font-size: 16px;
       margin-right: 10px;
+    }
+
+    .isdefault{
+      float: left;
+      span{
+        color: green;
+        vertical-align: 1px;
+        padding-left: 5px;
+        cursor: pointer;
+      }
     }
 
     .content {
@@ -93,6 +111,7 @@ export default {
       font-size: 16px;
       cursor: pointer;
       transition: all 0.3s;
+      float: right;
 
       &:hover {
         opacity: 1;
