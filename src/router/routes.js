@@ -10,6 +10,8 @@ import AddCartSuccess from '@/views/AddCartSuccess'
 import ShopCart from '@/views/ShopCart'
 import Trade from '@/views/Trade'
 import AddAddress from '@/views/addAddress'
+import Pay from '@/views/Pay'
+import PaySuccess from '@/views/PaySuccess'
 
 export default
   [{
@@ -50,4 +52,10 @@ export default
   }, {
     path: '/addAddress',
     component: AddAddress
+  }, {
+    path: '/pay',
+    component: Pay
+  }, {
+    path: '/paysuccess',
+    component: PaySuccess
   }]

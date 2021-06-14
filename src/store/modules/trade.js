@@ -10,8 +10,8 @@ const actions = {
     const result = await reqTradeInfo()
     const addresses = JSON.parse(localStorage.getItem('ADDRESS_ShOP')) || []
     result.data.data.records[0].deliveryAddress = addresses
+
     if (result.code === 200) {
-      // console.log(result.data.data.records[0].deliveryAddress[0]);
       commit('RECEIVE_TRADE_INFO', result.data.data.records[0])
     }
   },
@@ -43,7 +43,7 @@ const getters = {
   },
 
   deliveryAddress(state) {
-    return state.tradeInfo.deliveryAddress || []
+    return state.tradeInfo.deliveryAddress || {}
   }
 }
 

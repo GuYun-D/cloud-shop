@@ -17,17 +17,16 @@
             <span class="s2">{{ address.phone }}</span>
             <span class="s3" v-if="address.isDefault">默认地址</span>
             <span class="s3" v-show="!address.isDefault">设为默认</span>
-            <span class="s4" @click="chooseAddress">更换地址</span>
+            <span class="s4" @click="addressList = !addressList">更换地址</span>
           </p>
         </div>
       </div>
       <div id="addressList" v-show="addressList">
         <ul>
           <li
-            v-for="address in deliveryAddress"
+            v-for="(address, index) in addressListArray"
             :key="address.name"
-            v-if="address.isDefault == false"
-            @click="changeAddress(address)"
+            @click="changeAddress(address, index)"
           >
             {{ address.name }}&nbsp;&nbsp;{{ address.address }}&nbsp;&nbsp;{{
               address.phone
@@ -39,8 +38,14 @@
       <div class="line"></div>
       <h5 class="pay">支付方式</h5>
       <div class="address clearfix">
-        <span class="username selected">在线支付</span>
-        <span class="username" style="margin-left: 5px">货到付款</span>
+        <span
+          class="username"
+          v-for="(pay, index) in paymentMethod"
+          :key="pay.id"
+          :class="{ selected: pay.default }"
+          @click="changePayMethod(index)"
+          >{{ pay.payName }}</span
+        >
       </div>
       <div class="line"></div>
       <h5 class="pay">送货清单</h5>
@@ -53,38 +58,20 @@
       </div>
       <div class="detail">
         <h5>商品清单</h5>
-        <ul class="list clearfix">
+        <ul class="list clearfix" v-for="shop in shopArr" :key="shop.id">
           <li>
-            <img src="./images/goods.png" alt="" />
+            <img style="width: 100px" :src="shop.defaultImg" alt="" />
           </li>
           <li>
             <p>
-              Apple iPhone 6s (A1700) 64G 玫瑰金色
-              移动联通电信4G手机硅胶透明防摔软壳 本色系列
+              {{ shop.titile }}
             </p>
             <h4>7天无理由退货</h4>
           </li>
           <li>
-            <h3>￥5399.00</h3>
+            <h3>￥{{ shop.price }}</h3>
           </li>
-          <li>X1</li>
-          <li>有货</li>
-        </ul>
-        <ul class="list clearfix">
-          <li>
-            <img src="./images/goods.png" alt="" />
-          </li>
-          <li>
-            <p>
-              Apple iPhone 6s (A1700) 64G 玫瑰金色
-              移动联通电信4G手机硅胶透明防摔软壳 本色系列
-            </p>
-            <h4>7天无理由退货</h4>
-          </li>
-          <li>
-            <h3>￥5399.00</h3>
-          </li>
-          <li>X1</li>
+          <li>X{{ shop.skuNum }}</li>
           <li>有货</li>
         </ul>
       </div>
@@ -93,6 +80,7 @@
         <textarea
           placeholder="建议留言前先与商家沟通确认"
           class="remarks-cont"
+          v-model="message"
         ></textarea>
       </div>
       <div class="line"></div>
@@ -105,8 +93,11 @@
     <div class="money clearfix">
       <ul>
         <li>
-          <b><i>1</i>件商品，总商品金额</b>
-          <span>¥5399.00</span>
+          <b
+            ><i>{{ totailNum }}</i
+            >件商品，总商品金额</b
+          >
+          <span>{{ totalPrice }}</span>
         </li>
         <li>
           <b>返现：</b>
@@ -119,22 +110,19 @@
       </ul>
     </div>
     <div class="trade">
-      <div class="price">应付金额:　<span>¥5399.00</span></div>
-      <div class="receiveInfo">
-        寄送至:
-        <span>北京市昌平区宏福科技园综合楼6层</span>
-        收货人：<span>张三</span>
-        <span>15010658793</span>
+      <div class="price">
+        应付金额:　<span>{{ totalPrice }}</span>
       </div>
     </div>
     <div class="sub clearfix">
-      <router-link class="subBtn" to="/pay">提交订单</router-link>
+      <a href="javascript:;" @click="submitOrder" class="subBtn">提交订单</a>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
+// import { reqSubminOrder } from "@/api";
 
 export default {
   name: "Trade",
@@ -142,12 +130,33 @@ export default {
     return {
       address: {},
       addressList: false,
+      defaultAddress: {},
       index: -1,
+      message: "",
+      addressListArray: [],
+      paymentWay: "在线支付",
+      paymentMethod: [
+        {
+          id: 7689485697,
+          payName: "在线支付",
+          default: true,
+        },
+        {
+          id: 647586708 - 90,
+          payName: "货到付款",
+          default: false,
+        },
+      ],
+      shopArr: [],
+      orderNumber: "",
     };
   },
 
   mounted() {
     this.getTradeInfo();
+    this.$store.dispatch("getCartList");
+    this.randerAddress();
+    this.getShopList();
   },
 
   methods: {
@@ -155,32 +164,84 @@ export default {
       this.$store.dispatch("tradeInfo");
     },
 
-    chooseAddress() {
-      this.addressList = true;
-    },
-
     changeAddress(address) {
       this.address = address;
       this.addressList = false;
     },
+
+    randerAddress() {
+      setTimeout(() => {
+        for (let i = 0; i < this.deliveryAddress.length; i++) {
+          if (this.deliveryAddress[i].isDefault == true) {
+            this.address = this.deliveryAddress[i];
+          } else {
+            this.addressListArray.push(this.deliveryAddress[i]);
+          }
+        }
+      }, 200);
+    },
+
+    changePayMethod(index) {
+      this.paymentMethod.forEach((item) => {
+        item.default = false;
+      });
+      this.paymentMethod[index].default = true;
+      this.paymentWay = this.paymentMethod[index].name;
+    },
+
+    getShopList() {
+      setTimeout(() => {
+        this.shopArr = this.shopList.filter((item) => {
+          return item.isChecked === 1;
+        });
+      }, 1000);
+    },
+
+    // 提交订单
+    async submitOrder() {
+      let tradeNum = this.tradeInfo.outTradeNo;
+      let tradeData = {
+        consignee: this.address.name,
+        consigneeTel: this.address.phone,
+        deliveryAddress: this.address.address,
+        paymentWay: this.paymentWay,
+        orderDetailList: this.addressListArray,
+      };
+      // 带上交易编号和交易信息
+      try {
+        const result = await this.$API.reqSubminOrder(tradeNum, tradeData);
+        if (result.code === 200) {
+          this.orderNumber = result.data;
+          alert("提交成功")
+          this.$router.push('/pay?orderNo='+result.data)
+        }
+      } catch (error) {
+        alert(error.message)
+      }
+    },
   },
 
   computed: {
-    ...mapGetters(["orderDetailList", "deliveryAddress"]),
+    ...mapGetters(["deliveryAddress"]),
+    ...mapState({
+      shopList: (state) => state.shopCart.shopCartList,
+      tradeInfo: (state) => state.trade.tradeInfo,
+    }),
 
-    defaultAddress() {
-      let index = -1;
-      for (let i = 0; i < this.deliveryAddress.length; i++) {
-        if (this.deliveryAddress[i].isDefault == true) {
-          index = i;
-        }
-      }
+    totailNum() {
+      let num = 0;
+      this.shopArr.forEach((item) => {
+        num += item.skuNum;
+      });
+      return num;
+    },
 
-      if (index === -1) {
-        return (this.address = this.deliveryAddress[0]);
-      } else {
-        return (this.address = this.deliveryAddress[index]);
-      }
+    totalPrice() {
+      let price = 0;
+      this.shopArr.forEach((item) => {
+        price += item.skuNum * item.price;
+      });
+      return price;
     },
   },
 };

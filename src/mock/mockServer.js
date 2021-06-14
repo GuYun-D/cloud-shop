@@ -8,6 +8,7 @@ import searchList from './search.json'
 import detail from './detail.json'
 import user from './user.json'
 import trade from './trade.json'
+import subminOrder from './subminOrder.json'
 
 // 提供楼层接口
 Mock.mock('http://localhost:8080/mock/floors', 'get' , {code: 200, data: floors})
@@ -23,3 +24,6 @@ Mock.mock('http://localhost:8080/mock/user', 'get', {code: 200, data: user})
 
 // 提供订单信息接口
 Mock.mock('http://localhost:8080/mock/trade', 'get', {code: 200, data: trade})
+
+// 提供提交订单接口
+Mock.mock('http://localhost:8080/mock/subminOrder', 'post', {code: 200, data: subminOrder})

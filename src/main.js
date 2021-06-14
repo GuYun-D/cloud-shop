@@ -4,6 +4,8 @@ import store from './store'
 import "swiper/css/swiper.css";
 import Pageination from './components/Pageination'
 
+import * as API from '@/api'
+
 /**
  * mockjs不需要暴漏函数，直接打包就可以通过ajax访问
  */
@@ -22,7 +24,9 @@ new Vue({
   render: h => h(App),
   beforeCreate () {
     // 将当前vm作为总线对象挂到Vue原型对象上
-    Vue.prototype.$bus = this
+    Vue.prototype.$bus = this,
+    // 不适用vuex
+    Vue.prototype.$API = API
   },
   router,
   /**

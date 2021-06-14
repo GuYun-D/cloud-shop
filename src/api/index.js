@@ -240,8 +240,8 @@ export const reqTradeInfo = () => {
 export const reqAddAress = (addressInfo) => {
 
   const addresses = JSON.parse(localStorage.getItem('ADDRESS_ShOP')) || []
-  if(addressInfo.isDefault){
-    for(let i = 0; i < addresses.length; i++){
+  if (addressInfo.isDefault) {
+    for (let i = 0; i < addresses.length; i++) {
       addresses[i].isDefault = false
     }
   }
@@ -256,5 +256,19 @@ export const reqAddAress = (addressInfo) => {
       addreess: addressInfo.addreess,
       isDefault: addressInfo.isDefault
     }
+  }
+}
+
+/**
+ * 提交订单
+ */
+export const reqSubminOrder = (tradeNum, tradeData) => {
+  ajax.post('http://localhost:8080/mock/subminOrder')
+  return {
+    code: 200,
+    message: "成功",
+    data: 71,
+    ok: true
+
   }
 }
