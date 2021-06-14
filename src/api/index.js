@@ -267,8 +267,25 @@ export const reqSubminOrder = (tradeNum, tradeData) => {
   return {
     code: 200,
     message: "成功",
-    data: 71,
+    data: Date.now(),
     ok: true
-
   }
+}
+
+/**
+ * 获取支付信息
+ */
+export const reqPayInfo = (orderId) => {
+  return {
+    "code": 200,
+    "message": "成功",
+    "data": {
+      "codeUrl": "weixin://wxpay/bizpayurl?pr=P0aPBJK",
+      "orderId": 71,
+      "totalFee": 23996,
+      "resultCode": "SUCCESS"
+    },
+    "ok": true
+  }
+
 }

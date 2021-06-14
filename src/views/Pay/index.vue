@@ -7,8 +7,8 @@
           <span class="success-info">订单提交成功，请您及时付款，以便尽快为您发货~~</span>
         </h4>
         <div class="paymark">
-          <span class="fl">请您在提交订单<em class="orange time">4小时</em>之内完成支付，超时订单会自动取消。订单号：<em>145687</em></span>
-          <span class="fr"><em class="lead">应付金额：</em><em class="orange money">￥17,654</em></span>
+          <span class="fl">请您在提交订单<em class="orange time">4小时</em>之内完成支付，超时订单会自动取消。订单号：<em>{{orderNum}}</em></span>
+          <span class="fr"><em class="lead">应付金额：</em><em class="orange money">￥{{payInfo.totalFee}}</em></span>
         </div>
       </div>
       <div class="checkout-info">
@@ -18,12 +18,6 @@
           <li>其它支付渠道正在调试中，敬请期待。</li>
           <li>为了保证您的购物支付流程顺利完成，请保存以下支付宝信息。</li>
         </ol>
-        <h4>支付宝账户信息：（很重要，<span class="save">请保存！！！</span>）</h4>
-        <ul>
-          <li>支付帐号：11111111</li>
-          <li>密码：111111</li>
-          <li>支付密码：111111</li>
-        </ul>
       </div>
       <div class="checkout-steps">
         <div class="step-tit">
@@ -65,7 +59,7 @@
         <div class="hr"></div>
 
         <div class="submit">
-          <router-link class="btn" to="/paysuccess">立即支付</router-link>
+          <a src="javascript:;" class="btn" to="/paysuccess" @click="open">立即支付</a>
         </div>
         <div class="otherpay">
           <div class="step-tit">
@@ -84,6 +78,41 @@
 <script>
   export default {
     name: 'Pay',
+    data(){
+      return {
+        orderNum: '',
+        payInfo: {}
+      }
+    }, 
+
+    beforeMount(){
+      this.orderNum = this.$route.query.orderNo
+    },
+
+    mounted(){
+      this.getPayInfo()
+    },
+
+    methods: {
+      getPayInfo(){
+        const result =  this.$API.reqPayInfo(this.orderNum)
+        if(result.code === 200){
+          this.payInfo = result.data
+        }
+      },
+
+      open() {
+        this.$alert('<strong>这是 <i>HTML</i> 片段</strong>', '请使用微信支付', {
+          dangerouslyUseHTMLString: true,
+          showClose: false,
+          showCancelButton: true,
+          showConfirmButton: true,
+          cancelButtonText: '支付遇到问题',
+          confirmButtonText: '我已成功支付',
+          center: true
+        });
+      }
+    }
   }
 </script>
 

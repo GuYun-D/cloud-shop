@@ -18,6 +18,8 @@ import TypeNav from "./components/TypeNav"
 Vue.component(TypeNav.name, TypeNav)
 Vue.component(Pageination.name, Pageination)
 
+import '@/plugins/elementui'
+
 Vue.config.productionTip = false
 
 new Vue({
