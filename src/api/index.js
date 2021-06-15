@@ -301,3 +301,13 @@ export const reqPayStatus = (id) => {
     ok: true
   }
 }
+
+/**
+ * 
+ * @param {number} page 查询第几页
+ * @param {number} limit 每页显示多少条数据
+ * @returns 订单列表
+ */
+export const reqOrderList = (page, limit) => {
+  return ajax.get('http://localhost:8080/mock/orderList')
+}

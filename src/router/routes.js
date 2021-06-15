@@ -13,6 +13,8 @@ import AddAddress from '@/views/addAddress'
 import Pay from '@/views/Pay'
 import PaySuccess from '@/views/PaySuccess'
 import Center from '@/views/Center'
+import MyOrder from '@/views/Center/MyOrder'
+import GroupOrder from '@/views/Center/GroupOrder'
 
 export default
   [{
@@ -61,5 +63,19 @@ export default
     component: PaySuccess
   }, {
     path: '/center',
-    component: Center
+    component: Center,
+    children: [
+      {
+        path: 'myorder',
+        component: MyOrder
+      },
+      {
+        path: 'grouporder',
+        component: GroupOrder
+      },
+      {
+        path: '',
+        redirect: 'myorder'
+      }
+    ]
   }]
