@@ -12,6 +12,7 @@ import Trade from '@/views/Trade'
 import AddAddress from '@/views/addAddress'
 import Pay from '@/views/Pay'
 import PaySuccess from '@/views/PaySuccess'
+import Center from '@/views/Center'
 
 export default
   [{
@@ -58,4 +59,7 @@ export default
   }, {
     path: '/paysuccess',
     component: PaySuccess
+  }, {
+    path: '/center',
+    component: Center
   }]

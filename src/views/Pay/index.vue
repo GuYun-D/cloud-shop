@@ -4,17 +4,29 @@
       <div class="checkout-tit">
         <h4 class="tit-txt">
           <span class="success-icon"></span>
-          <span class="success-info">订单提交成功，请您及时付款，以便尽快为您发货~~</span>
+          <span class="success-info"
+            >订单提交成功，请您及时付款，以便尽快为您发货~~</span
+          >
         </h4>
         <div class="paymark">
-          <span class="fl">请您在提交订单<em class="orange time">4小时</em>之内完成支付，超时订单会自动取消。订单号：<em>{{orderNum}}</em></span>
-          <span class="fr"><em class="lead">应付金额：</em><em class="orange money">￥{{payInfo.totalFee}}</em></span>
+          <span class="fl"
+            >请您在提交订单<em class="orange time">4小时</em
+            >之内完成支付，超时订单会自动取消。订单号：<em>{{
+              orderNum
+            }}</em></span
+          >
+          <span class="fr"
+            ><em class="lead">应付金额：</em
+            ><em class="orange money">￥{{ payInfo.totalFee }}</em></span
+          >
         </div>
       </div>
       <div class="checkout-info">
         <h4>重要说明：</h4>
         <ol>
-          <li>尚品汇商城支付平台目前支持<span class="zfb">支付宝</span>支付方式。</li>
+          <li>
+            尚品汇商城支付平台目前支持<span class="zfb">支付宝</span>支付方式。
+          </li>
           <li>其它支付渠道正在调试中，敬请期待。</li>
           <li>为了保证您的购物支付流程顺利完成，请保存以下支付宝信息。</li>
         </ol>
@@ -25,10 +37,9 @@
         </div>
         <div class="step-cont">
           <ul class="payType">
-            <li><img src="./images/pay2.jpg"></li>
-            <li><img src="./images/pay3.jpg"></li>
+            <li><img src="./images/pay2.jpg" /></li>
+            <li><img src="./images/pay3.jpg" /></li>
           </ul>
-
         </div>
         <div class="hr"></div>
 
@@ -38,28 +49,28 @@
           </div>
           <div class="step-cont">
             <ul class="payType">
-              <li><img src="./images/pay10.jpg"></li>
-              <li><img src="./images/pay11.jpg"></li>
-              <li><img src="./images/pay12.jpg"></li>
-              <li><img src="./images/pay13.jpg"></li>
-              <li><img src="./images/pay14.jpg"></li>
-              <li><img src="./images/pay15.jpg"></li>
-              <li><img src="./images/pay16.jpg"></li>
-              <li><img src="./images/pay17.jpg"></li>
-              <li><img src="./images/pay18.jpg"></li>
-              <li><img src="./images/pay19.jpg"></li>
-              <li><img src="./images/pay20.jpg"></li>
-              <li><img src="./images/pay21.jpg"></li>
-              <li><img src="./images/pay22.jpg"></li>
-
+              <li><img src="./images/pay10.jpg" /></li>
+              <li><img src="./images/pay11.jpg" /></li>
+              <li><img src="./images/pay12.jpg" /></li>
+              <li><img src="./images/pay13.jpg" /></li>
+              <li><img src="./images/pay14.jpg" /></li>
+              <li><img src="./images/pay15.jpg" /></li>
+              <li><img src="./images/pay16.jpg" /></li>
+              <li><img src="./images/pay17.jpg" /></li>
+              <li><img src="./images/pay18.jpg" /></li>
+              <li><img src="./images/pay19.jpg" /></li>
+              <li><img src="./images/pay20.jpg" /></li>
+              <li><img src="./images/pay21.jpg" /></li>
+              <li><img src="./images/pay22.jpg" /></li>
             </ul>
           </div>
-
         </div>
         <div class="hr"></div>
 
         <div class="submit">
-          <a src="javascript:;" class="btn" to="/paysuccess" @click="open">立即支付</a>
+          <a src="javascript:;" class="btn" to="/paysuccess" @click="open"
+            >立即支付</a
+          >
         </div>
         <div class="otherpay">
           <div class="step-tit">
@@ -76,194 +87,240 @@
 </template>
 
 <script>
-  export default {
-    name: 'Pay',
-    data(){
-      return {
-        orderNum: '',
-        payInfo: {}
+import QRCode from "qrcode";
+
+export default {
+  name: "Pay",
+  data() {
+    return {
+      orderNum: "",
+      payInfo: {},
+      payStatus: 0,
+    };
+  },
+
+  beforeMount() {
+    this.orderNum = this.$route.query.orderNo;
+  },
+
+  mounted() {
+    this.getPayInfo();
+  },
+
+  methods: {
+    getPayInfo() {
+      const result = this.$API.reqPayInfo(this.orderNum);
+      if (result.code === 200) {
+        this.payInfo = result.data;
       }
-    }, 
-
-    beforeMount(){
-      this.orderNum = this.$route.query.orderNo
     },
 
-    mounted(){
-      this.getPayInfo()
-    },
-
-    methods: {
-      getPayInfo(){
-        const result =  this.$API.reqPayInfo(this.orderNum)
-        if(result.code === 200){
-          this.payInfo = result.data
-        }
-      },
-
-      open() {
-        this.$alert('<strong>这是 <i>HTML</i> 片段</strong>', '请使用微信支付', {
+    async open() {
+      // 生成二维码
+      try {
+        const imgUrl = await QRCode.toDataURL(
+          "https://github.com/GuYun-D?tab=repositories"
+        );
+        // 成功生成二维码才弹框
+        this.$alert(`<img src="${imgUrl}" alt="">`, "请使用微信支付", {
           dangerouslyUseHTMLString: true,
           showClose: false,
           showCancelButton: true,
           showConfirmButton: true,
-          cancelButtonText: '支付遇到问题',
-          confirmButtonText: '我已成功支付',
-          center: true
-        });
+          cancelButtonText: "支付遇到问题",
+          confirmButtonText: "我已成功支付",
+          center: true,
+          beforeClose: (action, instance, done) => {
+            console.log(action);
+            if (action === "confirm") {
+              // 点击确定
+                this.$message.success("请确保支付成功，支付成功会自动跳转")
+            }else if(action === 'cancel'){
+              // 点击取消
+              this.$message.error('请联系我')
+              clearInterval(this.timer)
+              done()
+            }
+          },
+        })
+          // 无论是确认还是取消，都会强制关闭对话框
+          // 确认按钮
+          // .then()
+          // 取消按钮
+          .catch(() => {});
+
+        // 设置轮询,确保只有一个定时器
+        if (!this.timer) {
+          this.timer = setInterval(async () => {
+            const result = await this.$API.reqPayStatus(this.orderNum);
+            if (result.code === 200) {
+              // 支付成功
+              this.payStatus = 200;
+              clearInterval(this.timer);
+              this.timer = null;
+              // 关闭messageBox
+              this.$messagebox.close();
+              this.$router.push("/paysuccess");
+            }
+          }, 2000);
+        }
+      } catch (err) {
+        // 二维码生成失败
+        console.error(err);
       }
-    }
-  }
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
-  .pay-main {
-    margin-bottom: 20px;
+.pay-main {
+  margin-bottom: 20px;
 
-    .pay-container {
-      margin: 0 auto;
-      width: 1200px;
+  .pay-container {
+    margin: 0 auto;
+    width: 1200px;
 
-      a:hover {
-        color: #4cb9fc;
-      }
+    a:hover {
+      color: #4cb9fc;
+    }
 
-      .orange {
-        color: #e1251b;
-      }
+    .orange {
+      color: #e1251b;
+    }
 
-      .money {
-        font-size: 18px;
-      }
+    .money {
+      font-size: 18px;
+    }
 
-      .zfb {
-        color: #e1251b;
-        font-weight: 700;
-      }
+    .zfb {
+      color: #e1251b;
+      font-weight: 700;
+    }
 
-      .checkout-tit {
-        padding: 10px;
+    .checkout-tit {
+      padding: 10px;
 
-        .tit-txt {
-          font-size: 14px;
-          line-height: 21px;
+      .tit-txt {
+        font-size: 14px;
+        line-height: 21px;
 
-          .success-icon {
-            width: 30px;
-            height: 30px;
-            display: inline-block;
-            background: url(./images/icon.png) no-repeat 0 0;
-          }
-
-          .success-info {
-            padding: 0 8px;
-            line-height: 30px;
-            vertical-align: top;
-          }
-        }
-
-        .paymark {
-          overflow: hidden;
-          line-height: 26px;
-          text-indent: 38px;
-
-          .fl {
-            float: left;
-          }
-
-          .fr {
-            float: right;
-
-            .lead {
-              margin-bottom: 18px;
-              font-size: 15px;
-              font-weight: 400;
-              line-height: 22.5px;
-            }
-          }
-        }
-      }
-
-      .checkout-info {
-        padding-left: 25px;
-        padding-bottom: 15px;
-        margin-bottom: 10px;
-        border: 2px solid #e1251b;
-
-        h4 {
-          margin: 9px 0;
-          font-size: 14px;
-          line-height: 21px;
-          color: #e1251b;
-        }
-
-        ol {
-          padding-left: 25px;
-          list-style-type: decimal;
-          line-height: 24px;
-          font-size: 14px;
-        }
-
-        ul {
-          padding-left: 25px;
-          list-style-type: disc;
-          line-height: 24px;
-          font-size: 14px;
-        }
-      }
-
-      .checkout-steps {
-        border: 1px solid #ddd;
-        padding: 25px;
-
-        .hr {
-          height: 1px;
-          background-color: #ddd;
-        }
-
-        .step-tit {
-          line-height: 36px;
-          margin: 15px 0;
-        }
-
-        .step-cont {
-          margin: 0 10px 12px 20px;
-
-          ul {
-            font-size: 0;
-
-            li {
-              margin: 2px;
-              display: inline-block;
-              padding: 5px 20px;
-              border: 1px solid #ddd;
-              cursor: pointer;
-              line-height: 18px;
-            }
-          }
-        }
-      }
-
-      .submit {
-        text-align: center;
-
-        .btn {
+        .success-icon {
+          width: 30px;
+          height: 30px;
           display: inline-block;
-          padding: 15px 45px;
-          margin: 15px 0 10px;
-          font: 18px "微软雅黑";
-          font-weight: 700;
-          border-radius: 0;
-          background-color: #e1251b;
-          border: 1px solid #e1251b;
-          color: #fff;
-          text-align: center;
-          vertical-align: middle;
-          cursor: pointer;
-          user-select: none;
-          text-decoration: none;
+          background: url(./images/icon.png) no-repeat 0 0;
+        }
+
+        .success-info {
+          padding: 0 8px;
+          line-height: 30px;
+          vertical-align: top;
+        }
+      }
+
+      .paymark {
+        overflow: hidden;
+        line-height: 26px;
+        text-indent: 38px;
+
+        .fl {
+          float: left;
+        }
+
+        .fr {
+          float: right;
+
+          .lead {
+            margin-bottom: 18px;
+            font-size: 15px;
+            font-weight: 400;
+            line-height: 22.5px;
+          }
         }
       }
     }
+
+    .checkout-info {
+      padding-left: 25px;
+      padding-bottom: 15px;
+      margin-bottom: 10px;
+      border: 2px solid #e1251b;
+
+      h4 {
+        margin: 9px 0;
+        font-size: 14px;
+        line-height: 21px;
+        color: #e1251b;
+      }
+
+      ol {
+        padding-left: 25px;
+        list-style-type: decimal;
+        line-height: 24px;
+        font-size: 14px;
+      }
+
+      ul {
+        padding-left: 25px;
+        list-style-type: disc;
+        line-height: 24px;
+        font-size: 14px;
+      }
+    }
+
+    .checkout-steps {
+      border: 1px solid #ddd;
+      padding: 25px;
+
+      .hr {
+        height: 1px;
+        background-color: #ddd;
+      }
+
+      .step-tit {
+        line-height: 36px;
+        margin: 15px 0;
+      }
+
+      .step-cont {
+        margin: 0 10px 12px 20px;
+
+        ul {
+          font-size: 0;
+
+          li {
+            margin: 2px;
+            display: inline-block;
+            padding: 5px 20px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            line-height: 18px;
+          }
+        }
+      }
+    }
+
+    .submit {
+      text-align: center;
+
+      .btn {
+        display: inline-block;
+        padding: 15px 45px;
+        margin: 15px 0 10px;
+        font: 18px "微软雅黑";
+        font-weight: 700;
+        border-radius: 0;
+        background-color: #e1251b;
+        border: 1px solid #e1251b;
+        color: #fff;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        user-select: none;
+        text-decoration: none;
+      }
+    }
   }
+}
 </style>

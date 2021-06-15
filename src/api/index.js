@@ -287,5 +287,17 @@ export const reqPayInfo = (orderId) => {
     },
     "ok": true
   }
+}
 
+/**
+ * 查询订单支付状态
+ */
+export const reqPayStatus = (id) => {
+  // 支付中
+  // let code = 205
+
+  return {
+    code: 200,
+    ok: true
+  }
 }
