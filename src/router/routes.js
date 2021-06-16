@@ -1,20 +1,22 @@
 /**
  * 所有路由匹配的数组
  */
-import Home from '@/views/Home'
-import Search from '@/views/Search'
-import Register from '@/views/Register'
-import Login from '@/views/Login'
-import Detail from '@/views/detail'
-import AddCartSuccess from '@/views/AddCartSuccess'
-import ShopCart from '@/views/ShopCart'
-import Trade from '@/views/Trade'
-import AddAddress from '@/views/addAddress'
-import Pay from '@/views/Pay'
-import PaySuccess from '@/views/PaySuccess'
-import Center from '@/views/Center'
-import MyOrder from '@/views/Center/MyOrder'
-import GroupOrder from '@/views/Center/GroupOrder'
+// import Home from '@/views/Home'
+const Home = () => import('@/views/Home')
+const Search = () => import('@/views/Search')
+const Register = () => import('@/views/Register')
+const Login = () => import('@/views/Login')
+const Detail = () => import('@/views/detail')
+const AddCartSuccess = () => import('@/views/AddCartSuccess')
+const ShopCart = () => import('@/views/ShopCart')
+const Trade = () => import('@/views/Trade')
+const AddAddress = () => import('@/views/addAddress')
+const Pay = () => import('@/views/Pay')
+const PaySuccess = () => import('@/views/PaySuccess')
+const Center = () => import('@/views/Center')
+const MyOrder = () => import('@/views/Center/MyOrder')
+const GroupOrder = () => import('@/views/Center/GroupOrder')
+
 
 import store from '@/store'
 
