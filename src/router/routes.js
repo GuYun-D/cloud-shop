@@ -57,22 +57,55 @@ export default
     component: Detail
   }, {
     path: '/addCartSuccess',
-    component: AddCartSuccess
+    component: AddCartSuccess,
+    // 只有携带了skuNum和skuInfo的数据，才能跳转到添加购物车成功的页面
+    beforeEnter: (to, from, next) => {
+      let skuNum = to.query.skuNum
+      let skuInfo = sessionStorage.getItem('SKUINFO_KEY')
+      if(skuNum && skuInfo){
+        next()
+      }else{
+        alert("参数不够")
+        next('/')
+      }
+    }
   }, {
     path: '/shopCart',
     component: ShopCart
   }, {
     path: '/trade',
-    component: Trade
+    component: Trade,
+    // 只有从购物车才能跳到交易页面
+    beforeEnter: (to, from, next) => {
+      if(from.path === '/shopCart'){
+        next()
+      }else {
+        next('/')
+      }
+    }
   }, {
     path: '/addAddress',
     component: AddAddress
   }, {
     path: '/pay',
-    component: Pay
+    component: Pay,
+    beforeEnter: (to, from, next) => {
+      if(from.path === '/trade'){
+        next()
+      }else {
+        next('/')
+      }
+    }
   }, {
     path: '/paysuccess',
-    component: PaySuccess
+    component: PaySuccess,
+    beforeEnter: (to, from, next) => {
+      if(from.path === '/pay'){
+        next()
+      }else {
+        next('/')
+      }
+    }
   }, {
     path: '/center',
     component: Center,

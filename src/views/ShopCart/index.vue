@@ -89,7 +89,7 @@
           <i class="summoney"> {{ totalPrice }} </i>
         </div>
         <div class="sumbtn">
-          <router-link to="/trade" class="sum-btn" target="_blank">结算</router-link>
+          <router-link to="/trade" class="sum-btn">结算</router-link>
         </div>
       </div>
     </div>
