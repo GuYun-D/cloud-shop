@@ -18,7 +18,15 @@ import TypeNav from "./components/TypeNav"
 Vue.component(TypeNav.name, TypeNav)
 Vue.component(Pageination.name, Pageination)
 
+// 导入elementui
 import '@/plugins/elementui'
+
+// 导入懒加载
+import VueLazyload from 'vue-lazyload'
+import loading from '@/assets/loading.gif'
+Vue.use(VueLazyload, {
+  loading
+})
 
 Vue.config.productionTip = false
 
