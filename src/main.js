@@ -28,6 +28,9 @@ Vue.use(VueLazyload, {
   loading
 })
 
+// 验证
+import './plugins/validator'
+
 Vue.config.productionTip = false
 
 new Vue({

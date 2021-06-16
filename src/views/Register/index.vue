@@ -9,14 +9,16 @@
           <router-link target="_blank" to="/login">登陆</router-link>
         </span>
       </h3>
+
       <div class="content">
         <label>手机号:</label>
         <input
-          type="text"
-          placeholder="请输入你的手机号"
           v-model="registerInfo.phone"
+          name="phone"
+          v-validate="{ required: true, regex: /^1\d{10}$/ }"
+          :class="{ invalid: errors.has('phone') }"
         />
-        <span class="error-msg">错误提示信息</span>
+        <span class="error-msg">{{ errors.first("phone") }}</span>
       </div>
       <div class="content">
         <label>验证码:</label>
@@ -146,7 +148,7 @@ export default {
           });
 
           alert("注册成功");
-          this.$router.push('/login')
+          this.$router.push("/login");
         } catch (error) {
           alert(error.message);
         }
