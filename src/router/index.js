@@ -96,9 +96,21 @@ router.beforeEach(async (to, from, next) => {
     }
   } else {
     // 没登陆过
-    // 判断用户是否去订单相关的页面
-    next()
-    console.log("没登陆过");
+    // 判断用户是否去订单相关,支付相关的，用户中心，交易相关的的页面
+    console.log("没登陆过，没有token");
+    console.log(to.path);
+    if(to.path.startsWith('/center') || to.path.startsWith('/pay') || to.path.startsWith('/trade')){
+      next('/login?redirect' + to.path)
+    }else{
+      next()
+    }
+
+    // if(to.path.startsWith('/center')){
+    //   alert('滚')
+    // }else {
+    //   next()
+    // }
+
   }
 })
 

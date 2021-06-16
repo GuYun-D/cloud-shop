@@ -16,6 +16,8 @@ import Center from '@/views/Center'
 import MyOrder from '@/views/Center/MyOrder'
 import GroupOrder from '@/views/Center/GroupOrder'
 
+import store from '@/store'
+
 export default
   [{
     path: '/',
@@ -39,6 +41,16 @@ export default
     component: Login,
     meta: {
       isHiddenFooter: true
+    },
+    // 路由独享守卫
+    beforeEnter: (to, from, next) => {
+      // 只有没登陆才能看到login
+      let token = store.state.user.token
+      if(token){
+        next('/')
+      }else {
+        next()
+      }
     }
   }, {
     path: '/detail/:skuId',

@@ -104,6 +104,19 @@ export default {
       }
     },
   },
+
+  // 组将内守卫,组件未创建好的时候，就已经触发了
+  // 不能获取实例this
+  // beforeRouteEnter(to, from, next) {
+  //   // 给next传递一个回调函数，就可以访问组件对象了
+  //   next(vm => {
+  //     if(vm.$store.state.user.token){
+  //       next('/')
+  //     }else {
+  //       next()
+  //     }
+  //   })
+  // },
 };
 </script>
 
